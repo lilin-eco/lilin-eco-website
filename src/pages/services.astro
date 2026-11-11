@@ -1,0 +1,12 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { serviceSteps } from '../data/company';
+---
+<BaseLayout title="实施与服务 · 礼林生态">
+  <section class="page-heading"><div class="wrap"><p class="eyebrow">IMPLEMENTATION & SERVICES</p><h1>围绕业务需求，推进软件项目</h1><p>让需求、建设范围与实施安排，在每一阶段都保持清晰。</p></div></section>
+  <section class="wrap content-section">
+    <div class="intro-text"><h2>从沟通开始，明确项目的每一步</h2><p>以下为软件项目服务的沟通流程。具体阶段、交付清单、支持范围与响应安排，以双方确认的项目约定为准。</p></div>
+    <ol class="service-timeline">{serviceSteps.map(([number,title,text]) => <li><span>{number}</span><div><h2>{title}</h2><p>{text}</p></div></li>)}</ol>
+    <div class="callout"><div><h3>让建设范围和交付要求先清晰起来</h3><p>您可以提前整理业务流程、现有系统情况、使用对象和预期交付内容。</p></div><a class="button" href="/contact/">项目咨询 →</a></div>
+  </section>
+</BaseLayout>

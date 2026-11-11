@@ -2,38 +2,66 @@
 import '../styles/global.css';
 import { company } from '../data/company';
 interface Props { title?: string; description?: string; }
-const { title = '礼林生态 · 与自然同行', description = '达州礼林生态科技有限责任公司官方网站，了解公司介绍、业务展示、新闻动态与联系信息。' } = Astro.props;
+const {
+  title = '礼林生态 · 面向政府的工程项目软件服务',
+  description = '达州礼林生态科技有限责任公司，面向中国政府客户的工程项目软件服务，了解产品与解决方案、项目案例及实施服务。',
+} = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
-const links = [['/', '首页'], ['/about/', '公司介绍'], ['/business/', '业务展示'], ['/news/', '新闻动态'], ['/contact/', '联系我们']];
+const links = [
+  ['/', '首页'],
+  ['/solutions/', '产品与解决方案'],
+  ['/cases/', '项目案例'],
+  ['/services/', '实施与服务'],
+  ['/about/', '公司介绍'],
+  ['/news/', '新闻动态'],
+  ['/contact/', '联系我们'],
+];
+const isCurrent = (href: string) => href === '/' ? Astro.url.pathname === '/' : Astro.url.pathname.startsWith(href);
 ---
 <!doctype html>
 <html lang="zh-CN">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>{title}</title>
-<meta name="description" content={description} />
-<meta name="theme-color" content="#193d32" />
-<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-<link rel="canonical" href={canonical} />
-<meta property="og:title" content={title} />
-<meta property="og:description" content={description} />
-<meta property="og:type" content="website" />
-<meta property="og:locale" content="zh_CN" />
-<meta property="og:url" content={canonical} />
-</head>
-<body>
-<a class="skip-link" href="#main">跳转到正文</a>
-<header class="header">
- <div class="wrap header-inner">
-  <a class="brand" href="/" aria-label="礼林生态首页"><img src="/favicon.svg" width="40" height="40" alt="" /><span>礼林生态<small>LILIN ECO</small></span></a>
-  <nav aria-label="主导航">{links.map(([href,label]) => <a href={href} aria-current={(href === '/' ? Astro.url.pathname === '/' : Astro.url.pathname.startsWith(href)) ? 'page' : undefined}>{label}</a>)}</nav>
- </div>
-</header>
-<main id="main"><slot /></main>
-<footer class="footer">
- <div class="wrap footer-top"><div><a class="footer-brand" href="/">礼林生态 <span>LILIN ECO</span></a><p>{company.fullName}</p></div><div class="footer-links">{links.slice(1).map(([href,label]) => <a href={href}>{label}</a>)}</div></div>
- <div class="wrap footer-bottom"><span>© {new Date().getUTCFullYear()} {company.fullName}</span><span>与自然同行 · 与美好共生</span></div>
-</footer>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#1458ce" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:url" content={canonical} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">跳转到正文</a>
+    <div class="topbar"><div class="wrap"><span>{company.fullName}</span><span>面向政府 · 工程项目软件服务</span></div></div>
+    <header class="header">
+      <div class="wrap header-inner">
+        <a class="brand" href="/" aria-label="礼林生态首页">
+          <img src="/favicon.svg" width="38" height="38" alt="" />
+          <span>礼林生态<small>LILIN ECO</small></span>
+        </a>
+        <nav class="desktop-nav" aria-label="主导航">
+          {links.map(([href,label]) => <a href={href} aria-current={isCurrent(href) ? 'page' : undefined}>{label}</a>)}
+        </nav>
+        <details class="mobile-menu">
+          <summary>栏目导航 <span aria-hidden="true">☰</span></summary>
+          <nav aria-label="移动导航">
+            {links.map(([href,label]) => <a href={href} aria-current={isCurrent(href) ? 'page' : undefined}>{label}</a>)}
+          </nav>
+        </details>
+      </div>
+    </header>
+    <main id="main"><slot /></main>
+    <footer class="footer">
+      <div class="wrap footer-top">
+        <div class="footer-company"><a class="footer-brand" href="/">礼林生态 <span>LILIN ECO</span></a><p>{company.fullName}</p><p>面向政府的工程项目软件服务</p></div>
+        <div><h2>产品与服务</h2><a href="/solutions/">产品与解决方案</a><a href="/cases/">项目案例</a><a href="/services/">实施与服务</a></div>
+        <div><h2>了解礼林</h2><a href="/about/">公司介绍</a><a href="/news/">新闻动态</a><a href="/contact/">联系我们</a></div>
+      </div>
+      <div class="wrap footer-bottom"><span>© {new Date().getUTCFullYear()} {company.fullName}</span><span>工程业务为本 · 软件服务为桥</span></div>
+    </footer>
+  </body>
 </html>

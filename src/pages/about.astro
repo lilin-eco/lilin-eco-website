@@ -1,10 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Landscape from '../components/Landscape.astro';
 import { company } from '../data/company';
 ---
 <BaseLayout title="公司介绍 · 礼林生态">
-<section class="page-heading wrap"><p class="eyebrow">ABOUT LILIN ECO</p><h1>认识礼林生态</h1><p>从这里，了解我们的名字与新的开始。</p></section>
-<section class="wrap split content-section"><Landscape compact /><div><span class="section-number">01 / 关于我们</span><h2>{company.fullName}</h2><p class="lead">欢迎来到礼林生态官方网站。</p><p class="muted">这里是公司的官方信息窗口。我们将通过这个窗口，持续向您介绍公司的业务、项目与最新动态，让信息更清晰，让沟通更便捷。</p><p class="notice">公司详细介绍正在整理中，更多信息将陆续公布。</p><a class="text-link" href="/news/">查看最新动态 <span>↗</span></a></div></section>
-<section class="soft-section"><div class="wrap section"><div class="section-title"><div><p class="eyebrow">GET TO KNOW US</p><h2>每一次了解，都从真实开始</h2></div></div><div class="three-grid"><a class="info-card" href="/business/"><span class="section-number">01</span><h3>了解业务</h3><p>关注业务与项目的正式发布。</p><span class="text-link">业务展示 ↗</span></a><a class="info-card" href="/news/"><span class="section-number">02</span><h3>关注动态</h3><p>阅读公司公告与最新消息。</p><span class="text-link">新闻动态 ↗</span></a><a class="info-card" href="/contact/"><span class="section-number">03</span><h3>建立联系</h3><p>获取统一公布的对外联系信息。</p><span class="text-link">联系我们 ↗</span></a></div></div></section>
+  <section class="page-heading"><div class="wrap"><p class="eyebrow">ABOUT LILIN ECO</p><h1>工程业务为本，软件服务为桥</h1><p>认识面向政府客户的工程项目软件服务企业。</p></div></section>
+  <section class="wrap content-section">
+    <div class="company-intro"><div class="company-panel"><img src="/favicon.svg" alt="" width="64" height="64" /><h2>礼林生态</h2><span>LILIN ECO</span><p>面向政府<br />聚焦工程项目软件服务</p></div><div><p class="eyebrow">公司介绍</p><h2>{company.fullName}</h2><p>达州礼林生态科技有限责任公司面向中国政府客户，围绕工程项目的软件建设需求开展服务。</p><p>我们关注软件与实际业务之间的衔接，围绕项目信息、业务过程和数据组织等需求开展沟通，明确软件项目的建设方向与实施范围。</p><p>欢迎通过本网站了解我们的解决方案、实施服务与公司动态。可公开的项目案例和更多公司信息将陆续更新。</p><a class="text-link" href="/solutions/">了解产品与解决方案 →</a></div></div>
+    <div class="three-grid company-focus"><article class="info-card"><span class="card-number">01 / 服务对象</span><h3>面向政府客户</h3><p>从客户的业务目标、工作流程与使用需求出发。</p></article><article class="info-card"><span class="card-number">02 / 业务方向</span><h3>工程项目软件</h3><p>聚焦工程项目相关的软件需求与业务应用场景。</p></article><article class="info-card"><span class="card-number">03 / 沟通重点</span><h3>建设与实施衔接</h3><p>明确需求范围、软件方案与项目实施安排。</p></article></div>
+  </section>
 </BaseLayout>
