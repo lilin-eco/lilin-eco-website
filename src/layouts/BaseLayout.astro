@@ -3,8 +3,8 @@ import '../styles/global.css';
 import { company } from '../data/company';
 interface Props { title?: string; description?: string; }
 const {
-  title = '礼林生态 · 面向政府的工程项目软件服务',
-  description = '达州礼林生态科技有限责任公司，面向中国政府客户的工程项目软件服务，了解产品与解决方案、项目案例及实施服务。',
+  title = '礼林生态 · 工程项目软件解决方案',
+  description = '达州礼林生态科技有限责任公司，围绕工程项目的信息管理、流程协同与数据汇总，提供软件解决方案及实施服务。',
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const links = [
@@ -36,7 +36,6 @@ const isCurrent = (href: string) => href === '/' ? Astro.url.pathname === '/' : 
   </head>
   <body>
     <a class="skip-link" href="#main">跳转到正文</a>
-    <div class="topbar"><div class="wrap"><span>{company.fullName}</span><span>面向政府 · 工程项目软件服务</span></div></div>
     <header class="header">
       <div class="wrap header-inner">
         <a class="brand" href="/" aria-label="礼林生态首页">
@@ -57,11 +56,11 @@ const isCurrent = (href: string) => href === '/' ? Astro.url.pathname === '/' : 
     <main id="main"><slot /></main>
     <footer class="footer">
       <div class="wrap footer-top">
-        <div class="footer-company"><a class="footer-brand" href="/">礼林生态 <span>LILIN ECO</span></a><p>{company.fullName}</p><p>面向政府的工程项目软件服务</p></div>
+        <div class="footer-company"><a class="footer-brand" href="/">礼林生态 <span>LILIN ECO</span></a><p>{company.fullName}</p><p>工程项目软件解决方案与实施服务</p></div>
         <div><h2>产品与服务</h2><a href="/solutions/">产品与解决方案</a><a href="/cases/">项目案例</a><a href="/services/">实施与服务</a></div>
         <div><h2>了解礼林</h2><a href="/about/">公司介绍</a><a href="/news/">新闻动态</a><a href="/contact/">联系我们</a></div>
       </div>
-      <div class="wrap footer-bottom"><span>© {new Date().getUTCFullYear()} {company.fullName}</span><span>工程业务为本 · 软件服务为桥</span></div>
+      <div class="wrap footer-bottom"><span>© {new Date().getUTCFullYear()} {company.fullName}</span></div>
     </footer>
   </body>
 </html>

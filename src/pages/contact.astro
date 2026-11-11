@@ -8,7 +8,7 @@ const contacts = [
 ];
 ---
 <BaseLayout title="联系我们 · 礼林生态">
-  <section class="page-heading"><div class="wrap"><p class="eyebrow">CONTACT US</p><h1>沟通工程项目的软件需求</h1><p>从实际业务问题开始，一起明确软件建设方向。</p></div></section>
+  <section class="page-heading"><div class="wrap"><p class="eyebrow">CONTACT US</p><h1>沟通工程项目的软件需求</h1><p>说明当前业务流程和需要解决的问题，便于确定软件建设范围。</p></div></section>
   <section class="wrap content-section">
     <div class="contact-heading"><h2>{company.fullName}</h2><p>公司对外联系方式正在整理中，公布后将在本页统一更新。</p></div>
     <div class="three-grid">{contacts.map(item => <div class="contact-card"><span class="eyebrow">{item.en}</span><h3>{item.label}</h3>{item.href ? <a class="contact-value" href={item.href}>{item.value}</a> : <p class="contact-value">{item.value || '即将公布'}</p>}</div>)}</div>

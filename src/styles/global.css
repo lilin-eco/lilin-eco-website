@@ -21,8 +21,8 @@ h3 { font-size: 21px; line-height: 1.5; }
 .wrap { width: min(1200px, calc(100% - 80px)); margin-inline: auto; }
 .skip-link { position: absolute; top: -100px; left: 20px; padding: 12px; background: white; z-index: 100; }
 .skip-link:focus { top: 10px; }
-.topbar { background: #f3f6fa; color: #6b788c; font-size: 11px; }
-.topbar .wrap { display: flex; justify-content: space-between; gap: 20px; padding-block: 10px; }
+
+
 .header { position: sticky; top: 0; background: #fffffffa; z-index: 20; border-bottom: 1px solid var(--line); }
 .header-inner { min-height: 85px; display: flex; align-items: center; justify-content: space-between; gap: 25px; }
 .brand { display: flex; align-items: center; gap: 11px; flex-shrink: 0; }
@@ -109,7 +109,9 @@ h3 { font-size: 21px; line-height: 1.5; }
 .solution-card > .card-number { position: absolute; top: 32px; right: 27px; }
 .module-icon { width: 50px; height: 50px; background: linear-gradient(140deg, #edf4ff, #d8e7ff); position: relative; margin-bottom: 22px; border-radius: 6px; }
 .module-icon span { position: absolute; width: 22px; height: 7px; left: 14px; background: #68a0f5; transform: skewY(-16deg); top: 13px; }.module-icon span:nth-child(2) { top: 22px; background: #4381e1; }.module-icon span:nth-child(3) { top: 31px; background: #2058b1; }
-.solution-card h3 { margin-bottom: 12px; }.solution-card p { font-size: 13px; color: var(--muted); margin-bottom: 19px; }
+.solution-card h3 { margin-bottom: 12px; }
+.solution-card p.card-problem { color: #315e9f; font-weight: 500; margin-bottom: 12px; }
+.detail-panel > p { color: var(--muted); font-size: 13px; line-height: 1.9; margin-bottom: 22px; }.solution-card p { font-size: 13px; color: var(--muted); margin-bottom: 19px; }
 .solution-card ul, .detail-panel ul { list-style: none; padding: 0; margin: 0 0 25px; color: #536884; font-size: 12px; }
 .solution-card li, .detail-panel li { padding-block: 7px; display: flex; gap: 10px; align-items: center; }
 .solution-card li:before, .detail-panel li:before { content: ""; width: 4px; height: 4px; background: #6f9cdd; flex-shrink: 0; }
@@ -173,7 +175,7 @@ h3 { font-size: 21px; line-height: 1.5; }
   .section { padding-block: 60px; }.solution-detail { gap: 35px; }.company-intro { gap: 35px; }.footer-top { gap: 30px; }
 }
 @media (max-width: 650px) {
-  .wrap { width: calc(100% - 40px); }.topbar .wrap { padding-block: 9px; }.topbar .wrap > span:first-child { font-size: 10px; }.topbar .wrap > span:last-child { display: none; }.brand > span { font-size: 21px; }.brand img { width: 35px; height: 35px; }.header-inner { min-height: 70px; }.mobile-menu nav { top: 70px; }
+  .wrap { width: calc(100% - 40px); }.brand > span { font-size: 21px; }.brand img { width: 35px; height: 35px; }.header-inner { min-height: 70px; }.mobile-menu nav { top: 70px; }
   .hero-inner { grid-template-columns: 1fr; padding-block: 38px 35px; gap: 30px; }.hero .eyebrow { font-size: 11px; }.hero h1 { font-size: clamp(30px, 7.7vw, 43px); line-height: 1.55; }.hero-description { font-size: 14px; max-width: 100%; }.hero-actions { gap: 12px; }.button { font-size: 13px; padding: 13px 20px; gap: 22px; }.hero-caption { margin-top: 20px; font-size: 10px; }
   .project-visual { height: 340px; max-width: 430px; width: 100%; margin-inline: auto; }.scene-window { top: 45px; }.scene-sidebar { flex-basis: 65px; }.scene-content { padding: 13px; }.scene-stats > div { font-size: 9px; }.scene-top { font-size: 11px; }.scene-label { font-size: 8px; }.scene-panels > div { padding: 9px; }.floating-chip { font-size: 8px; }.floating-chip strong { font-size: 10px; }.chip-top { top: -3px; right: 4px; }.chip-bottom { bottom: 0; left: 12px; }.chip-icon { width: 27px; height: 27px; font-size: 18px; }
   .focus-strip > .wrap { grid-template-columns: 1fr; padding-block: 6px; }.focus-strip .wrap > div, .focus-strip .wrap > div:first-child { border: 0; border-top: 1px solid var(--line); padding: 16px 0; gap: 20px; }.focus-strip .wrap > div:first-child { border: 0; }.focus-strip strong { font-size: 14px; }.focus-strip small { font-size: 11px; }.focus-strip .wrap > div > span { font-size: 24px; }
