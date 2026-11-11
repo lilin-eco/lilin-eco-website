@@ -1,0 +1,13 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getPublishedNews, formatDate } from '../../lib/news';
+export async function getStaticPaths() {
+ return (await getPublishedNews()).map(post => ({ params: { id: post.id }, props: { post } }));
+}
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+<BaseLayout title={`${post.data.title} · 礼林生态`} description={post.data.description}>
+<article class="wrap article-section"><a class="text-link" href="/news/">← 返回新闻动态</a><header class="article-header"><span class="pill">{post.data.category}</span><h1>{post.data.title}</h1><p><time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time> · 礼林生态</p></header><div class="prose"><Content /></div><div class="article-end"><span>感谢关注礼林生态</span><a class="text-link" href="/contact/">联系我们 ↗</a></div></article>
+</BaseLayout>

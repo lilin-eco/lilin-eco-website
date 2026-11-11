@@ -1,0 +1,9 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getPublishedNews, formatDate } from '../../lib/news';
+const news = await getPublishedNews();
+---
+<BaseLayout title="新闻动态 · 礼林生态">
+<section class="page-heading wrap"><p class="eyebrow">NEWS & UPDATES</p><h1>礼林新动态</h1><p>公司消息、网站公告与值得关注的新进展。</p></section>
+<section class="wrap content-section"><div class="list-label"><span>全部动态</span><span>{news.length} 篇文章</span></div>{news.map(post=><a class="news-row" href={`/news/${post.id}/`}><time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time><div><span class="pill">{post.data.category}</span><h2>{post.data.title}</h2><p>{post.data.description}</p></div><span class="arrow" aria-hidden="true">↗</span></a>)}{news.length === 0 && <p class="empty">暂无新闻，欢迎稍后关注。</p>}</section>
+</BaseLayout>

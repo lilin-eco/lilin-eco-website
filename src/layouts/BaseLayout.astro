@@ -1,0 +1,39 @@
+---
+import '../styles/global.css';
+import { company } from '../data/company';
+interface Props { title?: string; description?: string; }
+const { title = '礼林生态 · 与自然同行', description = '达州礼林生态科技有限责任公司官方网站，了解公司介绍、业务展示、新闻动态与联系信息。' } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const links = [['/', '首页'], ['/about/', '公司介绍'], ['/business/', '业务展示'], ['/news/', '新闻动态'], ['/contact/', '联系我们']];
+---
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="theme-color" content="#193d32" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="canonical" href={canonical} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="zh_CN" />
+<meta property="og:url" content={canonical} />
+</head>
+<body>
+<a class="skip-link" href="#main">跳转到正文</a>
+<header class="header">
+ <div class="wrap header-inner">
+  <a class="brand" href="/" aria-label="礼林生态首页"><img src="/favicon.svg" width="40" height="40" alt="" /><span>礼林生态<small>LILIN ECO</small></span></a>
+  <nav aria-label="主导航">{links.map(([href,label]) => <a href={href} aria-current={(href === '/' ? Astro.url.pathname === '/' : Astro.url.pathname.startsWith(href)) ? 'page' : undefined}>{label}</a>)}</nav>
+ </div>
+</header>
+<main id="main"><slot /></main>
+<footer class="footer">
+ <div class="wrap footer-top"><div><a class="footer-brand" href="/">礼林生态 <span>LILIN ECO</span></a><p>{company.fullName}</p></div><div class="footer-links">{links.slice(1).map(([href,label]) => <a href={href}>{label}</a>)}</div></div>
+ <div class="wrap footer-bottom"><span>© {new Date().getUTCFullYear()} {company.fullName}</span><span>与自然同行 · 与美好共生</span></div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,13 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { company } from '../data/company';
+const contacts = [
+ { label: '联系电话', en: 'TELEPHONE', value: company.phone, href: company.phone ? 'tel:' + company.phone : null },
+ { label: '电子邮箱', en: 'EMAIL', value: company.email, href: company.email ? 'mailto:' + company.email : null },
+ { label: '办公地址', en: 'ADDRESS', value: company.address, href: null },
+];
+---
+<BaseLayout title="联系我们 · 礼林生态">
+<section class="page-heading wrap"><p class="eyebrow">CONTACT US</p><h1>期待与你，建立联系</h1><p>感谢您对礼林生态的关注。</p></section>
+<section class="wrap content-section"><div class="contact-heading"><h2>{company.fullName}</h2><p class="muted">公司对外联系方式正在整理中，公布后将在本页统一更新。</p></div><div class="three-grid">{contacts.map(item=><div class="contact-card"><span class="eyebrow">{item.en}</span><h3>{item.label}</h3>{item.href ? <a class="contact-value" href={item.href}>{item.value}</a> : <p class="contact-value">{item.value || '即将公布'}</p>}</div>)}</div><div class="callout"><div><h3>关于合作咨询</h3><p>您可以提前整理合作方向、需求说明及联系信息，待官方联系方式公布后与我们沟通。</p></div><a class="text-link" href="/business/">了解业务信息 ↗</a></div></section>
+</BaseLayout>
