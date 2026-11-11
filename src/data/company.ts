@@ -3,9 +3,21 @@ export const company = {
   fullName: '达州礼林生态科技有限责任公司',
   englishName: 'LILIN ECO',
   positioning: '工程项目软件解决方案与实施服务',
-  phone: null as string | null,
-  email: null as string | null,
+  phone: '13088146876' as string | null,
+  email: '13088146876@139.com' as string | null,
   address: null as string | null,
+  registeredAddress: '四川省达州市通川区碑庙镇河坝街供销社院内',
+  establishedDate: '2023年8月11日',
+  registeredCapital: '50万元',
+  legalRepresentative: '廖先礼',
+  registeredRegion: '四川省达州市通川区',
+};
+
+export const companyInfoSources = {
+  checkedAt: '2026-11-11',
+  checkedDate: '2026.11.11',
+  aiqicha: 'https://aiqicha.baidu.com/detail/compinfo?pid=xlTM-TogKuTwqwau8Op4GdT8ltRkrQfXuQmd',
+  qcc: 'https://www.qcc.com/cpartner/35f2849a7c5cc8c7e6b87d793d52aae6',
 };
 
 export const solutions = [

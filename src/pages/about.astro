@@ -4,6 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeading from '../components/PageHeading.astro';
 import CultureMark from '../components/CultureMark.astro';
 import ContactInvite from '../components/ContactInvite.astro';
+import CompanyInfoSource from '../components/CompanyInfoSource.astro';
 import architecture from '../assets/architecture.png';
 import { company } from '../data/company';
 ---
@@ -12,8 +13,13 @@ import { company } from '../data/company';
   <section class="wrap content-section">
     <div class="intro-spread about-intro">
       <div class="about-portrait"><Image src={architecture} alt="自然光影下的建筑细节" widths={[640, 960]} sizes="(max-width: 700px) 100vw, 42vw" format="webp" loading="lazy" /></div>
-      <div class="about-text"><p class="eyebrow">关于我们</p><h2>{company.fullName}</h2><p>礼林生态围绕工程项目的软件建设与应用开展服务，关注项目信息管理、业务流程协同、工程资料管理与数据汇总等实际需求。</p><p>通过梳理现有工作方式、参与角色和信息流转关系，理解业务中的具体问题，形成相应的软件方案、开发计划与实施安排。</p><a class="text-link" href="/solutions/">了解解决方案 <span aria-hidden="true">→</span></a></div>
+      <div class="about-text"><p class="eyebrow">关于我们</p><h2>{company.fullName}</h2><p>礼林生态成立于{company.establishedDate}，注册于{company.registeredRegion}。公开登记经营范围包含软件开发、信息技术咨询服务、信息系统集成服务等。</p><p>围绕工程项目的软件建设与应用，关注项目信息管理、业务流程协同、工程资料管理与数据汇总等实际需求，提供相应的软件方案、定制开发与实施支持。</p><a class="text-link" href="/solutions/">了解解决方案 <span aria-hidden="true">→</span></a></div>
     </div>
+    <section class="company-records" aria-labelledby="registration-title">
+      <p class="eyebrow">COMPANY INFORMATION</p><h2 id="registration-title">企业登记信息</h2>
+      <dl class="registration-grid"><div><dt>成立日期</dt><dd>{company.establishedDate}</dd></div><div><dt>注册资本</dt><dd>{company.registeredCapital}</dd></div><div><dt>法定代表人</dt><dd>{company.legalRepresentative}</dd></div><div><dt>登记地区</dt><dd>{company.registeredRegion}</dd></div><div class="registration-address"><dt>注册地址</dt><dd>{company.registeredAddress}</dd></div></dl>
+      <CompanyInfoSource />
+    </section>
     <section class="culture-story culture-section">
       <CultureMark word="善念" position="right" />
       <p class="eyebrow">我们的处事之道</p><h2>让用心，体现在每一件事里</h2><p>“善心、善念、善行”是礼林的公司文化。我们希望把它落实到需求沟通、方案思考与交付服务中，从细小的工作做起。</p>

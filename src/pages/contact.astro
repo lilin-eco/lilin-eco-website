@@ -2,18 +2,20 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeading from '../components/PageHeading.astro';
 import CultureMark from '../components/CultureMark.astro';
+import CompanyInfoSource from '../components/CompanyInfoSource.astro';
 import { company } from '../data/company';
 const contacts = [
   { label: '联系电话', en: 'TELEPHONE', value: company.phone, href: company.phone ? 'tel:' + company.phone : null },
   { label: '电子邮箱', en: 'EMAIL', value: company.email, href: company.email ? 'mailto:' + company.email : null },
-  { label: '办公地址', en: 'ADDRESS', value: company.address, href: null },
+  { label: company.address ? '办公地址' : '注册地址', en: company.address ? 'OFFICE ADDRESS' : 'REGISTERED ADDRESS', value: company.address || company.registeredAddress, href: null },
 ];
 ---
 <BaseLayout title="联系我们 · 礼林生态">
   <PageHeading label="CONTACT US" title="聊聊您的项目需求" description="从一次沟通开始，理解业务中的问题与期待。" />
   <section class="wrap content-section">
-    <div class="contact-intro"><h2>{company.fullName}</h2><p>公司对外联系方式正在整理中，确认后将在本页统一公布。</p></div>
+    <div class="contact-intro"><h2>{company.fullName}</h2><p>欢迎就工程项目软件解决方案、定制开发与实施服务与我们联系。</p></div>
     <dl class="contact-list">{contacts.map(item => <div class="contact-item"><dt>{item.label}<span>{item.en}</span></dt><dd>{item.href ? <a href={item.href}>{item.value}</a> : item.value || '待公布'}</dd></div>)}</dl>
+    <CompanyInfoSource />
     <div class="intro-spread contact-guide culture-section"><CultureMark word="善念" /><div><p class="eyebrow">沟通之前</p><h2>从实际工作，<br />说起您的需要</h2></div><ol class="guide-list"><li><strong>希望解决什么问题</strong><span>日常工程项目管理中，需要改进的信息、流程或资料问题。</span></li><li><strong>目前如何开展工作</strong><span>现有工作流程、正在使用的系统，以及数据整理情况。</span></li><li><strong>哪些人需要参与</strong><span>涉及的使用角色、业务环节与协同对象。</span></li><li><strong>希望如何推进</strong><span>预期建设范围、实施安排与需要沟通的交付事项。</span></li></ol></div>
   </section>
 </BaseLayout>

@@ -1,0 +1,42 @@
+{
+  "companyName": "达州礼林生态科技有限责任公司",
+  "checkedAt": "2026-11-11",
+  "retrievalMethod": "无需登录的百度搜索结果页所展示的爱企查企业资料卡片、企查查企业档案摘要。平台详情页需要登录，未登录获取详情，未绕过访问限制。",
+  "publicSearchUrl": "https://www.baidu.com/s?wd=%E8%BE%BE%E5%B7%9E%E7%A4%BC%E6%9E%97%E7%94%9F%E6%80%81%E7%A7%91%E6%8A%80%E6%9C%89%E9%99%90%E8%B4%A3%E4%BB%BB%E5%85%AC%E5%8F%B8",
+  "sources": [
+    {
+      "platform": "爱企查",
+      "url": "https://aiqicha.baidu.com/detail/compinfo?pid=xlTM-TogKuTwqwau8Op4GdT8ltRkrQfXuQmd",
+      "observedFields": {
+        "legalRepresentative": "廖先礼",
+        "registeredCapital": "50万元",
+        "establishedDate": "2023-08-11",
+        "registeredAddress": "四川省达州市通川区碑庙镇河坝街供销社院内",
+        "businessScopeExcerpt": [
+          "软件开发",
+          "信息技术咨询服务",
+          "信息系统集成服务"
+        ]
+      }
+    },
+    {
+      "platform": "企查查",
+      "url": "https://www.qcc.com/cpartner/35f2849a7c5cc8c7e6b87d793d52aae6",
+      "searchSnippetDate": "2026-10-09",
+      "observedFields": {
+        "legalRepresentative": "廖先礼",
+        "establishedDate": "2023-08-11",
+        "phone": "13088146876",
+        "email": "13088146876@139.com",
+        "addressExcerpt": "四川省达州市通川区碑庙镇河坝街供…"
+      }
+    }
+  ],
+  "publicationNotes": [
+    "按精确公司全称匹配，成立日期和法定代表人两处收录一致。",
+    "地址仅标为注册地址，不声称为实际办公地点。",
+    "公开经营范围仅提取与已确认软件服务方向相关的项目，不据此宣称持有工程资质。",
+    "未取得可验证的统一社会信用代码，不展示该字段。",
+    "原始公开展示文字和截图保存于 output/preview-humanist/，不提交草稿截图。"
+  ]
+}
