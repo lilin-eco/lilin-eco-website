@@ -1,12 +1,18 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { solutions } from '../data/company';
+import PageHeading from '../components/PageHeading.astro';
+import ContactInvite from '../components/ContactInvite.astro';
+import { allSolutions } from '../data/company';
 ---
-<BaseLayout title="工程项目管理解决方案 · 礼林生态">
-  <section class="page-heading"><div class="wrap"><p class="eyebrow">SOLUTIONS</p><h1>工程项目管理解决方案</h1><p>将项目信息、业务流程和相关资料组织起来，服务日常管理与协同工作。</p></div></section>
+<BaseLayout title="工程项目软件解决方案 · 礼林生态">
+  <PageHeading label="SOLUTIONS" title="从业务需要出发" description="围绕项目信息、业务流程与工程资料，建立清晰、有序的软件管理方式。" word="善念" />
   <section class="wrap content-section">
-    <div class="intro-text"><h2>从业务问题，到建设思路</h2><p>不同项目的管理流程、参与角色和数据条件各有不同。以下从常见业务场景说明软件建设思路，具体功能与实施范围结合实际需求确定。</p></div>
-    {solutions.map(item => <section class="solution-detail" id={item.id}><div><span class="card-number">{item.number} / {item.title}</span><h2>{item.problem}</h2><p>{item.scene}</p><p class="scene-note">{item.description}</p></div><div class="detail-panel"><h3>解决思路</h3><p>{item.approach}</p><ul>{item.points.map(point => <li>{point}</li>)}</ul><h3>应用价值</h3><p>{item.result}</p><a class="text-link" href="/contact/">咨询此方案 →</a></div></section>)}
-    <div class="callout"><div><h3>从您的实际工作流程开始</h3><p>提供当前的业务流程、使用角色和数据情况，有助于确定适合项目的建设范围。</p></div><a class="button" href="/services/">了解实施服务 →</a></div>
+    <div class="intro-spread"><h2>理解问题，<br />再组织方案</h2><p>不同项目的工作流程、参与角色和数据条件各有不同。我们从日常管理中的具体问题入手，梳理信息与业务之间的关系，结合实际需求确定软件功能与实施范围。</p></div>
+    <nav class="anchor-nav" aria-label="方案目录">{allSolutions.map(item => <a href={'#' + item.id}><span>{item.number}</span>{item.title}</a>)}</nav>
+    {allSolutions.map(item => <section class="solution-detail" id={item.id}>
+      <div><span class="section-number">{item.number} / SOLUTION</span><h2>{item.title}</h2><p class="solution-context">{item.scene}</p></div>
+      <div class="solution-body"><h3>{item.problem}</h3><p>{item.approach}</p><ul class="solution-points">{item.points.map(point => <li>{point}</li>)}</ul><h3>让日常管理更清晰</h3><p>{item.result}</p><a class="text-link" href="/contact/">沟通此方案 <span aria-hidden="true">→</span></a></div>
+    </section>)}
   </section>
+  <ContactInvite />
 </BaseLayout>

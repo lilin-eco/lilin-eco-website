@@ -1,6 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <defs><linearGradient id="blue" x2="1" y2="1"><stop stop-color="#347ff0"/><stop offset="1" stop-color="#1645b6"/></linearGradient></defs>
-  <rect width="64" height="64" rx="12" fill="url(#blue)"/>
-  <path d="M17 15v34h29v-8H25V15Z" fill="white"/>
-  <path d="M33 15v18h13v-8h-5V15Z" fill="#b9d8ff"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="8" fill="#36593e"/><text x="32" y="46" text-anchor="middle" font-size="45" font-family="SimSun,serif" fill="#f8f7f3">礼</text></svg>

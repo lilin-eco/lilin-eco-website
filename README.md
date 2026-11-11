@@ -11,10 +11,10 @@
 
 ```sh
 npm ci
-npm run dev
+npm run dev -- --background
 ```
 
-开发地址默认为 `http://localhost:4321/`。
+开发地址默认为 `http://127.0.0.1:4321/`。使用 `npm run dev -- status` 查看状态、`npm run dev -- logs` 查看日志、`npm run dev -- stop` 停止后台服务。若环境不允许写入全局遥测配置，可设置环境变量 `ASTRO_TELEMETRY_DISABLED=1`。
 
 ```sh
 npm run build
@@ -37,16 +37,20 @@ src/pages/news/              新闻列表与详情
 src/content/news/            Markdown 新闻内容
 src/data/company.ts          公司名称与对外联系方式
 src/styles/global.css        全站样式与移动端适配
+src/components/              背景文化字、页头、新闻列表与联系入口
+src/assets/                  建筑光影与工作台图片（构建时输出响应式 WebP）
 public/                     静态资源
 astro.config.mjs            Astro 及正式网站地址配置
 .github/workflows/deploy.yml GitHub Pages 自动发布工作流
 ```
 
-网站采用蓝白软件企业视觉，包含首页、产品与解决方案、项目案例、实施与服务、公司介绍、新闻动态、联系我们和 404 页面。
+网站采用 E「柔和人文」视觉：米白底色、灰绿点缀、宋体标题、开放式图文排版。首页、解决方案、项目案例、实施服务、公司介绍、新闻列表及详情、联系页和 404 页共用这套样式。320px 起的手机、平板及桌面使用响应式布局；移动导航支持原生展开、外部点击与 Escape 关闭。
+
+“善心、善念、善行”以淡色背景文字融入首页及内页。背景字的透明度统一为 4.5%，标记为装饰内容，不进入屏幕阅读器的正文。颜色、间距和移动断点维护在 `src/styles/global.css`；文字层由 `src/components/CultureMark.astro` 渲染。
 
 ## 维护内容
 
-公司全称由用户确认：**达州礼林生态科技有限责任公司**。用户已确认业务为工程项目软件服务，主要客户为中国政府单位；对外文案以业务问题和解决方案为主，不将客户类型作为宣传标语。解决方案页面描述需求沟通方向，不代表已发布产品清单。首页软件画面为明确标注的应用场景示意。项目案例、资质、客户名录、电话、邮箱及办公地址未获资料支持，未添加虚构内容；案例和联系方式保留待公布状态。更新联系方式请编辑 `src/data/company.ts`，填写公开的 phone、email、address；电话和邮箱会自动显示拨号及邮件链接。服务方向与实施步骤集中维护在 `src/data/company.ts`；公司介绍、解决方案、项目案例和实施服务分别维护在 about、solutions、cases、services 页面。
+公司全称由用户确认：**达州礼林生态科技有限责任公司**。用户已确认业务为工程项目软件服务，主要客户为中国政府单位；对外文案以业务问题和解决方案为主，不将客户类型作为宣传标语。解决方案页面描述需求沟通方向，不代表已发布产品清单。首页图片为生成的建筑与工作场景意象，不作为公司实际办公场所或项目案例。项目案例、资质、客户名录、电话、邮箱及办公地址未获资料支持，未添加虚构内容；案例和联系方式保留待公布状态。更新联系方式请编辑 `src/data/company.ts`，填写公开的 phone、email、address；电话和邮箱会自动显示拨号及邮件链接。服务方向与实施步骤集中维护在 `src/data/company.ts`；公司介绍、解决方案、项目案例和实施服务分别维护在 about、solutions、cases、services 页面。
 
 新增新闻：在 `src/content/news/` 添加 `.md` 文件，例如 `company-update.md`：
 
@@ -62,7 +66,7 @@ draft: true
 新闻正文。
 ```
 
-确认正文可公开后，将 `draft` 改为 `false` 并推送到 main。文章按日期倒序展示，首页自动展示最近三篇；草稿不进入列表、详情路由和 sitemap。文件名对应地址，例如 `/news/company-update/`。现有新闻为真实的网站上线和本次官网栏目更新公告。
+确认正文可公开后，将 `draft` 改为 `false` 并推送到 main。文章按日期倒序展示，首页自动展示最近两篇；草稿不进入列表、详情路由和 sitemap。文件名对应地址，例如 `/news/company-update/`。现有新闻为真实的网站上线和本次官网栏目更新公告。
 
 ## 发布
 

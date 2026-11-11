@@ -1,0 +1,5 @@
+---
+interface Props { word: '善心' | '善念' | '善行'; position?: 'left' | 'right'; }
+const { word, position = 'left' } = Astro.props;
+---
+<span class:list={['culture-mark', `culture-mark--${position}`]} aria-hidden="true">{word}</span>

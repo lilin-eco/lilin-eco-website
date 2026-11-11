@@ -1,33 +1,36 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ProjectVisual from '../components/ProjectVisual.astro';
-import { company, solutions, serviceSteps } from '../data/company';
-import { getPublishedNews, formatDate } from '../lib/news';
-const news = (await getPublishedNews()).slice(0, 3);
+import CultureMark from '../components/CultureMark.astro';
+import NewsList from '../components/NewsList.astro';
+import architecture from '../assets/architecture.png';
+import worktable from '../assets/worktable.png';
+import { solutions, documentSolution } from '../data/company';
+import { getPublishedNews } from '../lib/news';
+const news = (await getPublishedNews()).slice(0, 2);
+const featured = [solutions[0], solutions[1], documentSolution];
 ---
 <BaseLayout>
-  <section class="hero">
+  <section class="home-hero culture-section">
+    <div class="hero-media"><Image src={architecture} alt="树影落在浅色建筑外墙上" widths={[640, 960, 1536]} sizes="(max-width: 700px) 100vw, 68vw" format="webp" quality={85} loading="eager" fetchpriority="high" /></div>
     <div class="wrap hero-inner">
-      <div class="hero-copy">
-        <h1>工程项目管理<br /><em>软件解决方案</em></h1>
-        <p class="hero-description">连接项目台账、业务流程与文档资料，为工程项目的信息管理、协同处理和数据汇总提供软件建设方案。</p>
-        <div class="hero-actions"><a class="button" href="/solutions/">了解解决方案 <span>→</span></a><a class="button button-outline" href="/contact/">项目咨询 <span>↗</span></a></div>
-      </div>
-      <ProjectVisual />
+      <CultureMark word="善心" />
+      <div class="hero-copy"><p class="hero-label">工程项目软件解决方案</p><h1>让项目协作，<br />更从容</h1><p class="hero-description">连接项目信息、业务流程与工程资料，<br class="desktop-break" />让日常管理清晰有序。</p><a class="button" href="/solutions/">了解解决方案 <span aria-hidden="true">→</span></a></div>
     </div>
   </section>
-  <section class="wrap section">
-    <div class="section-title"><div><p class="eyebrow">PRODUCTS & SOLUTIONS</p><h2>围绕实际业务问题，组织软件方案</h2><p>从信息分散、流转脱节与汇总繁琐等问题入手，建立项目、流程与资料之间的关联。</p></div><a class="text-link" href="/solutions/">全部解决方案 →</a></div>
-    <div class="three-grid">{solutions.map(item => <a class="solution-card" href={`/solutions/#${item.id}`}><span class="card-number">{item.number}</span><div class="module-icon" aria-hidden="true"><span></span><span></span><span></span></div><h3>{item.title}</h3><p class="card-problem">{item.problem}</p><p>{item.description}</p><ul>{item.points.map(point => <li>{point}</li>)}</ul><span class="text-link">了解场景 <span>→</span></span></a>)}</div>
+  <section class="home-solutions culture-section">
+    <div class="wrap editorial-split">
+      <CultureMark word="善念" />
+      <div class="section-intro"><p class="eyebrow">SOLUTIONS</p><h2>从业务需要出发</h2><span class="short-rule" aria-hidden="true"></span><a class="text-link" href="/solutions/">全部解决方案 <span aria-hidden="true">→</span></a></div>
+      <div class="solution-links">{featured.map(item => <a href={'/solutions/#' + item.id}><h3>{item.title}<span aria-hidden="true">→</span></h3><p>{item.homeDescription}</p></a>)}</div>
+    </div>
   </section>
-  <section class="soft-section"><div class="wrap section">
-    <div class="section-title"><div><p class="eyebrow">IMPLEMENTATION & SERVICES</p><h2>从业务梳理，到上线运行</h2><p>让需求、方案、开发与交付形成连续的实施过程。</p></div><a class="text-link" href="/services/">了解实施服务 →</a></div>
-    <ol class="steps">{serviceSteps.map(([number,title,text]) => <li><span>{number}</span><h3>{title}</h3><p>{text}</p></li>)}</ol>
-  </div></section>
-  <section class="about-band"><div class="wrap"><div><p class="eyebrow">ABOUT LILIN ECO</p><h2>礼林生态</h2><p class="company-name">{company.fullName}</p></div><div><p>礼林生态围绕工程项目中的信息管理、流程协同与数据汇总需求，开展软件方案设计、开发与实施服务。</p><a class="text-link" href="/about/">了解公司 →</a></div></div></section>
-  <section class="wrap section">
-    <div class="section-title"><div><p class="eyebrow">NEWS & UPDATES</p><h2>新闻动态</h2></div><a class="text-link" href="/news/">全部动态 →</a></div>
-    {news.map(post => <a class="news-row" href={`/news/${post.id}/`}><time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time><div><span class="pill">{post.data.category}</span><h3>{post.data.title}</h3><p>{post.data.description}</p></div><span class="arrow" aria-hidden="true">→</span></a>)}
+  <div class="worktable-banner"><Image src={worktable} alt="自然光下的工程图纸、铅笔与笔记本电脑" widths={[640, 1280, 2172]} sizes="100vw" format="webp" quality={85} loading="lazy" /></div>
+  <section class="home-services"><div class="wrap service-spread"><div><p>面向工程项目，提供软件的定制开发与落地实施，帮助业务需求转化为稳定、好用的系统。</p><a class="text-link" href="/services/">了解实施服务 <span aria-hidden="true">→</span></a></div><h2>把需求，<br />落实为可用的软件</h2></div></section>
+  <section class="home-about culture-section">
+    <div class="about-media"><Image src={architecture} alt="绿叶与建筑的光影细节" widths={[640, 960]} sizes="(max-width: 700px) 100vw, 55vw" format="webp" loading="lazy" /></div>
+    <div class="wrap"><CultureMark word="善行" position="right" /><div class="about-copy"><p class="eyebrow">ABOUT LILIN</p><h2>认真理解，<br />踏实交付</h2><p>礼林生态专注于工程项目领域的软件服务，提供工程项目软件解决方案、定制开发与实施支持。</p><a class="text-link" href="/about/">关于礼林 <span aria-hidden="true">→</span></a></div></div>
   </section>
-  <section class="contact-banner"><div class="wrap"><div><h2>沟通您的工程项目软件需求</h2><p>从现有流程和实际问题出发，明确软件建设范围。</p></div><a class="button button-white" href="/contact/">联系我们 <span>→</span></a></div></section>
+  <section class="home-news"><div class="wrap editorial-split"><div class="section-intro"><p class="eyebrow">NEWS & UPDATES</p><h2>新闻动态</h2><span class="short-rule" aria-hidden="true"></span><a class="text-link" href="/news/">全部动态 <span aria-hidden="true">→</span></a></div><NewsList posts={news} compact /></div></section>
+  <section class="home-contact"><div class="wrap"><p>从需求出发，让想法有序落地。</p><a class="button" href="/contact/">聊聊您的项目需求 <span aria-hidden="true">→</span></a></div></section>
 </BaseLayout>

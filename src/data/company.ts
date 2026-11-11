@@ -13,6 +13,7 @@ export const solutions = [
     id: 'project-information',
     number: '01',
     title: '项目信息管理',
+    homeDescription: '集中管理项目信息，形成清晰的项目视图。',
     problem: '项目信息分散，查找与更新不便',
     description: '以项目台账关联基础信息、阶段状态与业务资料，形成便于查询和维护的项目视图。',
     points: ['项目台账与分类查询', '阶段状态与更新记录', '项目关联资料归集'],
@@ -24,6 +25,7 @@ export const solutions = [
     id: 'process-collaboration',
     number: '02',
     title: '业务流程协同',
+    homeDescription: '让项目相关的业务流程高效、有序流转。',
     problem: '工作环节分散，处理进展难跟踪',
     description: '将参与角色、工作节点和处理记录组织到同一业务流程中，让事项流转与进展相互关联。',
     points: ['角色分工与流程节点', '事项流转与状态跟踪', '处理记录与业务留痕'],
@@ -35,6 +37,7 @@ export const solutions = [
     id: 'data-overview',
     number: '03',
     title: '数据汇总与分析',
+    homeDescription: '用一致的数据口径，了解项目与业务进展。',
     problem: '统计口径不一，汇总信息费时',
     description: '按统一口径组织项目数据，通过分类查询、统计汇总与概览展示，辅助了解业务进展。',
     points: ['数据口径与分类规则', '台账查询与统计汇总', '项目进展与信息概览'],
@@ -43,6 +46,19 @@ export const solutions = [
     result: '便于从汇总信息查看业务情况，并进一步定位到相关项目与明细。',
   },
 ];
+
+export const documentSolution = {
+  id: 'project-documents', number: '04', title: '工程资料管理',
+  homeDescription: '统一管理工程资料，便于查找与使用。',
+  problem: '资料分散在不同环节，归集与查找费时',
+  description: '按项目组织工程资料，关联业务环节与版本记录，便于分类归集和后续查阅。',
+  points: ['按项目分类归集', '关联环节与版本记录', '资料检索与归档'],
+  scene: '工程过程中持续产生图纸、文件与业务记录，需要了解资料对应的项目、所处环节与更新情况。',
+  approach: '结合资料类型和业务流程明确分类规则，将文件、项目信息与处理记录建立关联，并按使用角色设计查阅与维护范围。',
+  result: '减少文件分散保存带来的查找与核对工作，让项目资料便于归集、追溯和使用。',
+};
+
+export const allSolutions = [...solutions, documentSolution];
 
 export const serviceSteps = [
   ['01', '需求分析', '梳理现有流程、使用角色与数据来源，明确需要解决的问题和建设范围。'],

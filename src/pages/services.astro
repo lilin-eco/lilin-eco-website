@@ -1,12 +1,18 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeading from '../components/PageHeading.astro';
+import ContactInvite from '../components/ContactInvite.astro';
+import worktable from '../assets/worktable.png';
 import { serviceSteps } from '../data/company';
 ---
-<BaseLayout title="实施与服务 · 礼林生态">
-  <section class="page-heading"><div class="wrap"><p class="eyebrow">IMPLEMENTATION & SERVICES</p><h1>软件实施与服务</h1><p>从需求分析、方案设计到测试交付，衔接业务与软件建设。</p></div></section>
+<BaseLayout title="软件实施与服务 · 礼林生态">
+  <PageHeading label="IMPLEMENTATION & SERVICES" title="把需求，落实为可用的软件" description="从需求沟通到上线运行，衔接业务、软件与日常使用。" word="善行" />
   <section class="wrap content-section">
-    <div class="intro-text"><h2>从需求分析到上线运行</h2><p>围绕确认的建设范围推进实施，每一阶段形成相应的方案、软件或交付资料。具体工作内容与服务安排在项目启动时明确。</p></div>
-    <ol class="service-timeline">{serviceSteps.map(([number,title,text]) => <li><span>{number}</span><div><h2>{title}</h2><p>{text}</p></div></li>)}</ol>
-    <div class="callout"><div><h3>明确建设范围与交付要求</h3><p>您可以提前整理业务流程、现有系统情况、使用对象和预期交付内容。</p></div><a class="button" href="/contact/">项目咨询 →</a></div>
+    <div class="intro-spread service-intro"><h2>让每一阶段，<br />都有清晰的安排</h2><p>软件建设从理解业务开始。围绕确认的建设范围，逐步形成业务方案、软件功能与交付资料，并在实际使用中收集反馈、持续完善。</p></div>
+    <ol class="service-table">{serviceSteps.map(([number,title,text]) => <li><span class="section-number">{number}</span><h2>{title}</h2><p>{text}</p></li>)}</ol>
+    <div class="inner-photo"><Image src={worktable} alt="窗前工作台上的工程图纸与电脑" widths={[640, 1280]} sizes="(max-width: 700px) 100vw, 1180px" format="webp" loading="lazy" /></div>
+    <div class="intro-spread service-notes"><h2>先把边界讲清楚，<br />再把工作做扎实</h2><ul class="note-list"><li>结合现有流程与系统情况，明确建设目标和使用范围。</li><li>在实施前沟通功能边界、阶段安排与交付要求。</li><li>通过测试与使用说明，帮助软件衔接实际工作。</li><li>根据运行反馈，评估后续优化与支持安排。</li></ul></div>
   </section>
+  <ContactInvite />
 </BaseLayout>

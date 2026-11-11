@@ -1,0 +1,7 @@
+---
+import { formatDate } from '../lib/news';
+import type { CollectionEntry } from 'astro:content';
+interface Props { posts: CollectionEntry<'news'>[]; compact?: boolean; }
+const { posts, compact = false } = Astro.props;
+---
+<div class:list={['news-list', { 'news-list--compact': compact }]}>{posts.map(post => <a class="news-row" href={`/news/${post.id}/`}><div><span class="news-category">{post.data.category}</span><h2>{post.data.title}</h2>{!compact && <p>{post.data.description}</p>}</div><time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time><span class="link-arrow" aria-hidden="true">↗</span></a>)}</div>

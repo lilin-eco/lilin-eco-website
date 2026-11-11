@@ -5,4 +5,5 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
   site: 'https://lilin-eco.github.io',
   output: 'static',
+  devToolbar: { enabled: false },
 });

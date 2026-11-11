@@ -1,0 +1,6 @@
+---
+import CultureMark from './CultureMark.astro';
+interface Props { title: string; description: string; label: string; word?: '善心' | '善念' | '善行'; }
+const { title, description, label, word = '善心' } = Astro.props;
+---
+<section class="page-heading culture-section"><div class="wrap"><CultureMark word={word} position="right" /><p class="eyebrow">{label}</p><h1>{title}</h1><p class="page-description">{description}</p></div></section>
