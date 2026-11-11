@@ -1,0 +1,94 @@
+---
+const title = '礼林生态 · 官方网站';
+const description = '欢迎访问礼林生态官方网站。公司介绍与最新动态将陆续发布，敬请期待。';
+const canonical = new URL('/', Astro.site);
+const year = new Date().getUTCFullYear();
+---
+
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content={description} />
+		<meta name="theme-color" content="#214b3a" />
+		<link rel="canonical" href={canonical} />
+		<meta property="og:type" content="website" />
+		<meta property="og:locale" content="zh_CN" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonical} />
+		<title>{title}</title>
+	</head>
+	<body>
+		<header class="site-header">
+			<a class="wordmark" href="/" aria-label="礼林生态首页">礼林生态<span lang="en">LILIN ECO</span></a>
+			<span class="site-label">官方网站</span>
+		</header>
+		<main>
+			<div class="leaf" aria-hidden="true">
+				<svg viewBox="0 0 120 120" fill="none" focusable="false">
+					<path d="M27 93C23 51 43 25 95 20c4 47-17 74-55 74" fill="#dce7d9" />
+					<path d="M27 101 80 43M48 78l-2-24m17 6 21-1" stroke="#456c50" stroke-width="2" stroke-linecap="round" />
+				</svg>
+			</div>
+			<p class="eyebrow" lang="en">LILIN ECO · DAZHOU</p>
+			<h1>礼林生态</h1>
+			<p class="intro">官方网站正在建设中</p>
+			<div class="divider" aria-hidden="true"></div>
+			<p class="description">感谢您的关注。<br />公司介绍与最新动态，将在这里与您见面。</p>
+			<p class="status"><span aria-hidden="true"></span>敬请期待</p>
+		</main>
+		<footer>
+			<span>© {year} 礼林生态</span>
+			<span lang="en">LILIN ECO</span>
+		</footer>
+	</body>
+</html>
+
+<style>
+	:global(*) { box-sizing: border-box; }
+	:global(html) { color-scheme: light; background: #f7f8f2; }
+	:global(body) {
+		margin: 0;
+		min-height: 100svh;
+		display: flex;
+		flex-direction: column;
+		color: #214b3a;
+		font-family: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+		-webkit-font-smoothing: antialiased;
+	}
+	.site-header, footer {
+		width: min(1120px, calc(100% - 64px));
+		margin-inline: auto;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+	.site-header { min-height: 112px; border-bottom: 1px solid #214b3a20; }
+	.wordmark { display: flex; gap: 16px; align-items: center; color: inherit; text-decoration: none; font-size: 20px; font-weight: 600; letter-spacing: .12em; }
+	.wordmark span { font-size: 10px; font-weight: 500; letter-spacing: .18em; }
+	.wordmark:focus-visible { outline: 2px solid #456c50; outline-offset: 8px; }
+	.site-label { color: #536455; font-size: 12px; letter-spacing: .18em; }
+	main { flex: 1; width: min(720px, calc(100% - 48px)); margin-inline: auto; padding-block: 64px 84px; text-align: center; }
+	.leaf { width: 100px; margin: 0 auto 24px; }
+	.leaf svg { display: block; width: 100%; }
+	.eyebrow { margin: 0 0 22px; color: #5a705b; font-size: 11px; letter-spacing: .28em; }
+	h1 { margin: 0; padding-left: .14em; font-family: "Songti SC", "Noto Serif CJK SC", SimSun, serif; font-size: clamp(52px, 9vw, 86px); font-weight: 500; letter-spacing: .14em; line-height: 1.35; }
+	.intro { margin: 24px 0 0; font-size: clamp(17px, 3vw, 21px); letter-spacing: .12em; }
+	.divider { width: 36px; height: 1px; margin: 32px auto; background: #8d9e82; }
+	.description { margin: 0; color: #526254; font-size: 14px; line-height: 2.1; }
+	.status { display: inline-flex; gap: 9px; align-items: center; margin: 32px 0 0; color: #536455; font-size: 12px; letter-spacing: .15em; }
+	.status span { width: 6px; height: 6px; border-radius: 50%; background: #60825b; }
+	footer { min-height: 78px; border-top: 1px solid #214b3a20; color: #647063; font-size: 11px; letter-spacing: .08em; }
+	footer span[lang] { letter-spacing: .2em; }
+	@media (max-width: 560px) {
+		.site-header, footer { width: calc(100% - 40px); }
+		.site-header { min-height: 88px; }
+		.wordmark { gap: 10px; font-size: 18px; }
+		.wordmark span { display: none; }
+		main { padding-block: 48px 64px; }
+		.description { font-size: 13px; }
+	}
+</style>
