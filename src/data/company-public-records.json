@@ -41,6 +41,11 @@
     "业务领域为经营范围的展示归类，不代表全部项目均已承接，许可项目不作为已取得资质或许可证件的证明。",
     "两项软件研发内容依据项目会话中的实际进展表述，不作为已交付产品、客户案例或已取得的软件著作权证明。"
   ],
+  "currentContactEmailSource": {
+    "source": "公司指定的官网联系邮箱，覆盖平台历史收录邮箱",
+    "confirmedAt": "2026-11-12",
+    "email": "contact@lilinst.com"
+  },
   "businessScopeSource": {
     "source": "公司于本次官网修订提供的完整经营范围",
     "confirmedAt": "2026-11-12",

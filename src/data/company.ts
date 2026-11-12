@@ -5,20 +5,13 @@ export const company = {
   positioning: '数字技术 · 工程服务 · 生态生活',
   description: '达州礼林生态科技有限责任公司，围绕数字技术、工程与空间、生态与绿色技术、设备物资及运营生活服务，回应工作与生活中的具体需要。',
   phone: '13088146876' as string | null,
-  email: '13088146876@139.com' as string | null,
+  email: 'contact@lilinst.com' as string | null,
   address: null as string | null,
   registeredAddress: '四川省达州市通川区碑庙镇河坝街供销社院内',
   establishedDate: '2023年8月11日',
   registeredCapital: '50万元',
   legalRepresentative: '廖先礼',
   registeredRegion: '四川省达州市通川区',
-};
-
-export const companyInfoSources = {
-  checkedAt: '2026-11-11',
-  checkedDate: '2026.11.11',
-  aiqicha: 'https://aiqicha.baidu.com/detail/compinfo?pid=xlTM-TogKuTwqwau8Op4GdT8ltRkrQfXuQmd',
-  qcc: 'https://www.qcc.com/cpartner/35f2849a7c5cc8c7e6b87d793d52aae6',
 };
 
 export const businessAreas = [
@@ -39,7 +32,6 @@ export const businessAreas = [
     approach: '结合现场条件沟通设计、施工或安装内容，明确材料设备、工作界面、进度与验收安排。',
     points: ['专业设计服务', '土石方与园林绿化', '住宅水电安装维护', '金属门窗工程'],
     result: '按照确认的工作范围推进，重视现场衔接、过程沟通与交付核对。',
-    licensedNote: '住宅室内装饰装修、建设工程施工、建筑劳务分包等属于许可项目，具体承接以相关批准文件或许可证件为准。',
   },
   {
     id: 'ecology-green-technology', number: '03', title: '生态与绿色技术',
@@ -89,7 +81,7 @@ export const applicationDirections = [
 
 export const serviceSteps = [
   ['01', '沟通需要', '了解业务场景、现场条件或日常服务事项，听清希望解决的问题。'],
-  ['02', '确认范围', '明确服务内容、双方分工与交付要求；涉及许可项目时核对相应批准文件或许可证件。'],
+  ['02', '确认范围', '明确服务内容、双方分工与交付要求。'],
   ['03', '安排方案', '按服务类型沟通技术方案、材料设备、人员与时间安排。'],
   ['04', '实施交付', '依照确认的内容推进开发、作业、供货或服务，做好过程沟通与结果核对。'],
   ['05', '维护跟进', '按约定提供使用支持、维护或回访，及时沟通后续需要。'],
