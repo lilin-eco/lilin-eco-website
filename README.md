@@ -29,7 +29,7 @@ npm run preview
 src/pages/index.astro        官网首页
 src/pages/about.astro        公司介绍
 src/pages/solutions.astro    五个业务领域
-src/pages/cases.astro        项目与实践（在研软件方向）
+src/pages/cases.astro        项目与实践（数字化应用方向）
 src/pages/services.astro     服务方式
 src/pages/business.astro     原业务地址，跳转至业务领域
 src/pages/contact.astro      联系我们
@@ -55,7 +55,7 @@ esa.jsonc                   ESA Pages 静态构建与 404 页面配置
 
 成立日期、注册资本、法定代表人、注册地址、公开电话及邮箱依据免登录可见的企业资料收录信息补充，来源与查询方式记录在 `src/data/company-public-records.json`，页面显示核对日期及来源链接。注册地址与办公地址分别维护，未将登记地址标为实际办公地点。经营范围按公司本次提供的原文保存于 `src/data/business-scope.ts`：55 项一般项目、8 项许可项目，在关于页面中分别展开。经营范围不作为已取得资质、许可证件或已承接全部业务的证明。
 
-更新公司资料请编辑 `src/data/company.ts`：phone、email 为公开联系方式；address 仅填写确认的实际办公地址；registeredAddress 为登记地址。地址未确认时联系页显示注册地址，电话和邮箱支持拨号及邮件链接。五个业务领域、服务步骤及在研项目也集中维护在此文件。两个软件方向依据会话中的实际研发进度列为“研发中”，不表述为已交付产品、客户案例或已取得软著；不公开内部知识库、工时或私有开发资料。其他项目案例、资质、客户名录须有可公开的真实材料支持。页面地址保持不变。
+更新公司资料请编辑 `src/data/company.ts`：phone、email 为公开联系方式；address 仅填写确认的实际办公地址；registeredAddress 为登记地址。地址未确认时联系页显示注册地址，电话和邮箱支持拨号及邮件链接。五个业务领域、服务步骤及软件应用方向也集中维护在此文件。`applicationDirections` 对外介绍业务场景、分类与设计重点，不展示内部研发进度、接口实现状态或面向访客的解释性免责声明；也不将尚未验证的功能写成已具备的产品能力。项目案例、资质、客户名录须有可公开的真实材料支持，不公开内部知识库、工时或私有开发资料。页面地址保持不变。
 
 新增新闻：在 `src/content/news/` 添加 `.md` 文件，例如 `company-update.md`：
 

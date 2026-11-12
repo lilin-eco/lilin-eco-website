@@ -70,20 +70,20 @@ export const businessAreas = [
   },
 ];
 
-export const researchProjects = [
+export const applicationDirections = [
   {
     title: '装饰工程项目管理系统',
-    status: '研发中',
-    description: '围绕装饰工程中的项目、进度、预算、材料、财务与资料管理需求开展研发。',
+    category: '工程管理',
+    description: '面向项目组织、进度跟踪、预算材料与财务资料协同，梳理工程管理中的业务链路与信息关系。',
     focus: ['项目与进度', '预算与材料', '财务与资料'],
-    progress: '目前处于开发与联调阶段，业务功能按实际验证进度逐步完善。',
+    principle: '以项目为主线，关注业务台账、过程记录与相关资料之间的关联。',
   },
   {
     title: '装饰设计图纸资料管理系统',
-    status: '研发中',
-    description: '围绕图纸与资料的分类入库、版本修订、审核发放和归档需求开展研发。',
+    category: '图纸资料',
+    description: '面向图纸与资料的分类、修订、审核、发放和归档，关注版本关系与跨环节的信息衔接。',
     focus: ['图纸与目录', '修订与审核', '发放与归档'],
-    progress: '目前处于开发阶段，项目与目录等基础接口已开始实现，完整业务流程仍在完善。',
+    principle: '以图纸版本为主线，关注资料分类、流转关系与查阅权限的设计。',
   },
 ];
 
