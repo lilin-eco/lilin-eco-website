@@ -88,21 +88,20 @@ GitHub 原生自动发布已连接到 `lilin-eco/lilin-eco-website`，生产分�
 
 ## 域名与 ESA Pages 路由
 
-官网域名为 `lilinst.com`，`www.lilinst.com` 同样通过阿里云 ESA 免费版访问。站点使用 CNAME 接入，阿里云云解析保留权威 DNS。ESA 加速区域为全球（不包含中国内地）。
+官网域名为 `lilinst.com`，`www.lilinst.com` 同样通过阿里云 ESA 免费版访问。站点已切换为 NS 接入，ESA 权威 DNS 为 `singu-chuli.ns.atrustdns.com` 和 `brahmaputra.ns.atrustdns.com`。ESA 加速区域为全球（不包含中国内地）。
 
 | 主机记录 | 类型 | 目标 |
 | --- | --- | --- |
-| `@` | CNAME | `lilinst.com.a1.initxa.com` |
-| `www` | CNAME | `www.lilinst.com.a1.initxa.com` |
-| `_esaauth` | TXT | ESA 分配的站点归属验证码，保留此记录 |
+| `@` | ESA 代理记录 | Pages 项目默认域名作为源站占位，流量由 Pages 路由接管 |
+| `www` | ESA 代理记录 | Pages 项目默认域名作为源站占位，流量由 Pages 路由接管 |
 
-域名沿用已有 DNS 和免费 HTTPS 证书，无需更换解析目标。站点 ID 为 `188622332487808`，Pages 路由 `lilin-website-pages`（配置 ID `529631981656064`）将以下主机的所有路径交给 `lilin-eco-pages` 的生产版本：
+DNS 记录须在当前 ESA 权威区域维护，旧的云解析区域不再控制线上解析；保留免费 HTTPS 证书。站点 ID 为 `188622332487808`，Pages 路由 `lilin-website-pages`（配置 ID `529631981656064`）将以下主机的所有路径交给 `lilin-eco-pages` 的生产版本：
 
 ```text
 (http.host eq "lilinst.com") or (http.host eq "www.lilinst.com")
 ```
 
-正常访问直接由 ESA Pages 的静态资源提供。两条 ESA 代理 DNS 记录是 CNAME 接入与路由生效的必要配置，其源站字段使用当前项目的默认域名 `lilin-eco-pages-1764094378255018.debug.er.aliyun-esa.net` 作为接入占位，正式流量由上述路由直接处理，不访问该调试域名。路由的异常回源关闭，站点没有额外的回源覆盖规则；不要关闭 Pages 路由或开启异常回源。
+正常访问直接由 ESA Pages 的静态资源提供。保留两条 ESA 代理 DNS 记录，其源站字段使用当前项目的默认域名 `lilin-eco-pages-1764094378255018.debug.er.aliyun-esa.net` 作为接入占位，正式流量由上述路由直接处理，不访问该调试域名。路由的异常回源关闭，站点没有额外的回源覆盖规则；不要关闭 Pages 路由或开启异常回源。
 
 站点规范链接、Open Graph 地址、robots.txt 与 sitemap 均由 `astro.config.mjs` 的 `site` 生成，统一为 `https://www.lilinst.com/`。临时预览域名仅供调试，需使用控制台生成的 60 分钟访问令牌；正式域名无需令牌。不要在仓库或工作流中保存令牌、AccessKey 或本机 OAuth 凭据。
 
@@ -135,4 +134,30 @@ npm run build
 npm run check:seo
 ```
 
-检查覆盖唯一标题与摘要、规范链接、JSON-LD、分享图文件、面包屑、文章元数据、404、草稿隔离、站点地图及内部链接。站点地图仅包含 8 个实际可收录页面，不放草稿、旧跳转页或 404。未绑定百度/Google/Bing 站长账户；需在相应账户验证网站后提交 `https://www.lilinst.com/sitemap.xml`。不填写未经提供的站长验证标记，也不自动生成重复的营销文章。
+检查覆盖唯一标题与摘要、规范链接、JSON-LD、分享图文件、面包屑、文章元数据、404、草稿隔离、站点地图及内部链接。站点地图目前包含 8 个实际可收录页面，不放草稿、旧跳转页或 404。百度已完成所有权验证并手动提交这 8 个网址；百度当前 sitemap 配额为 0，保留 robots.txt 中的 sitemap 入口。Google、Bing 尚未配置完成。不自动生成重复的营销文章。
+
+## 百度自动提交
+
+这是本项目添加的自动化，使用百度普通收录 API；Astro 本身不自动推送百度。
+
+`main` 推送后，ESA 原生构建发布继续照常运行，同时 GitHub Actions 工作流 `Baidu push after ESA deployment` 开始等待。构建结束时，`scripts/build-search-manifest.mjs` 根据 sitemap 生成 `dist/search-manifest.json`，记录 Git 提交版本与页面内容 SHA-256，并为可收录 HTML 写入不影响视觉的校验 meta。工作流必须确认正式域名上的版本与本次提交一致、所有页面的校验标记一致，才会调用百度；构建失败、旧缓存、跳转和 HTTP 错误都不会触发提交。生产版本 15 分钟左右仍未可访问时，等待步骤报错，排查后手动重跑。
+
+只比较线上已发布页面，提交相对上次百度成功接收记录新增或变化的网址。草稿、404、旧跳转页和未进入 sitemap 的页面不会提交。删除的页面从记录中移除，不向百度提交删除请求。首次记录以已手动提交的 8 个页面为基线，位于 `.github/baidu-initial-state.json`；不要修改基线来清除历史记录。
+
+凭据只放在仓库 Settings → Secrets and variables → Actions 的加密 Secret **`BAIDU_PUSH_TOKEN`** 中，由最后的提交步骤读取；不放源代码、GitHub Variables、构建环境或日志。密钥另存于已授权的私密钉钉「官网运维」知识库。工作流不需要阿里云 AccessKey，不重新启用 GitHub Pages。`output/` 已忽略，禁止提交凭据临时文件。
+
+成功记录保存于独立分支 **`codex/baidu-push-state`** 的 `.github/baidu-state.json`，只含公开网址、摘要和提交版本，不含任何密钥。工作流的 `contents: write` 用于维护该分支，不写入 main；ESA 仅自动部署 main，不会因更新记录重复部署。请勿删除状态分支或将它合并回 main。每个网址得到百度明确接收后才保存其摘要；配额不足、凭据失效或接口故障会令工作流报错，尚未成功的网址保留待提交，下次部署或手动重跑继续处理。少量请求在接收后、记录保存前中断时可能重复提交，采用可重试设计防止遗漏。
+
+百度界面目前提供 HTTP 接口，`data.zz.baidu.com` 的 HTTPS 证书存在主机名不匹配。实现通过百度同一服务的 `ziyuan.baidu.com` 建立验证证书的 HTTPS 连接，使用 `Host: data.zz.baidu.com` 路由到提交接口，并明确保持 TLS SNI 为 `ziyuan.baidu.com`。不关闭证书检查、不降级为 HTTP、不跟随接口重定向；如果百度调整此路由，工作流会报错，需复核接口，不能直接放开 TLS。
+
+维护检查：
+
+```sh
+npm run test:search
+npm run build
+npm run check:seo
+gh run list --workflow baidu-push.yml
+gh workflow run baidu-push.yml --ref main
+```
+
+手动重跑同样只提交尚未确认接收的变化页面。多个发布串行处理，旧版本被较新 main 提交替代时跳过，由最新任务补齐所有待提交页面。自动提交有助于通知百度发现更新，不保证收录或排名。

@@ -1,0 +1,45 @@
+name: Baidu push after ESA deployment
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: baidu-production-push
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  submit:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    permissions:
+      contents: write # Only the separate checkpoint branch is written; main is never changed.
+    env:
+      ASTRO_TELEMETRY_DISABLED: '1'
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm run test:search
+      - run: npm run build && npm run check:seo
+      - name: Wait for this ESA production version
+        id: deployment
+        run: node scripts/baidu-push.mjs wait
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - name: Submit new and updated pages to Baidu
+        if: steps.deployment.outputs.ready == 'true'
+        run: node scripts/baidu-push.mjs submit
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          BAIDU_PUSH_TOKEN: ${{ secrets.BAIDU_PUSH_TOKEN }}
