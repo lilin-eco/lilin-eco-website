@@ -2,7 +2,8 @@
 
 基于 Astro 官方 Minimal 模板初始化，通过 GitHub Actions 构建并发布至 GitHub Pages。
 
-- 网站：https://lilin-eco.github.io/
+- 网站：https://lilinst.com/
+- GitHub Pages 源站：https://lilin-eco.github.io/
 - 仓库：https://github.com/lilin-eco/lilin-eco.github.io
 - Node.js：推荐 24 LTS（见 `.nvmrc`）
 - 包管理器：npm，提交 `package-lock.json` 以保持依赖一致
@@ -77,6 +78,22 @@ draft: true
 推送到 `main` 分支会自动触发构建和部署，也可在 GitHub Actions 中手动运行 `Deploy to GitHub Pages`。
 
 Pages 的构建来源需设为 **GitHub Actions**。本仓库是组织主页仓库 `lilin-eco.github.io`，发布在域名根目录，因此不设置额外的 `base` 路径。
+
+## 域名与 ESA 代理
+
+官网域名为 `lilinst.com`，`www.lilinst.com` 同样通过阿里云 ESA 免费版访问。站点使用 CNAME 接入，阿里云云解析保留权威 DNS。ESA 加速区域为全球（不包含中国内地）。
+
+| 主机记录 | 类型 | 目标 |
+| --- | --- | --- |
+| `@` | CNAME | `lilinst.com.a1.initxa.com` |
+| `www` | CNAME | `www.lilinst.com.a1.initxa.com` |
+| `_esaauth` | TXT | ESA 分配的站点归属验证码，保留此记录 |
+
+ESA 的两条代理记录均回源到 `lilin-eco.github.io`，回源 Host 与 SNI 同为 `lilin-eco.github.io`，回源协议为 HTTPS，并校验源站证书。访客证书使用 ESA 免费证书。
+
+本方案由 ESA 代理现有 GitHub Pages，GitHub Pages 的自定义域名保持为空，不添加 `public/CNAME`；否则源站可能将请求重定向到前端域名，形成重定向循环。站点规范链接、Open Graph 地址与 sitemap 由 `astro.config.mjs` 的 `site` 生成，`public/robots.txt` 使用官网域名。
+
+ESA 免费套餐为 12 个月，不启用自动续费；到期前应在 ESA 控制台核对续用安排。HTTPS、回源与缓存规则在 ESA 控制台维护；源码推送 main 后继续通过 GitHub Actions 更新源站。
 
 ```sh
 gh run list --repo lilin-eco/lilin-eco.github.io --limit 5
