@@ -7,7 +7,7 @@ import { getPublishedNews } from '../../lib/news';
 const news = await getPublishedNews();
 ---
 <BaseLayout title="新闻动态 · 礼林生态">
-  <PageHeading label="NEWS & UPDATES" title="记录礼林的每一步" description="公司消息、网站公告与工程项目软件服务动态。" word="善念" />
+  <PageHeading label="NEWS & UPDATES" title="记录礼林的每一步" description="公司消息、网站公告与业务服务动态。" word="善念" />
   <section class="wrap content-section"><div class="list-label"><span>全部动态</span><span>{news.length} 篇文章</span></div><NewsList posts={news} />{news.length === 0 && <p>新的动态正在整理，欢迎稍后关注。</p>}</section>
   <ContactInvite />
 </BaseLayout>
