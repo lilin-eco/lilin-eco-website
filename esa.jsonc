@@ -1,5 +1,5 @@
 {
-  "name": "lilin-eco-website",
+  "name": "lilin-eco-pages",
   "description": "礼林生态官方网站",
   "installCommand": "npm ci",
   "buildCommand": "npm run build",
