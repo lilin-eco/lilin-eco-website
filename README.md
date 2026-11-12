@@ -74,13 +74,13 @@ draft: true
 
 ## 发布与托管
 
-正式网站使用 GitHub 关联的 ESA Pages 项目 `lilin-eco-pages`，仅托管 `npm run build` 生成的静态 `dist/`，没有动态函数入口、数据库或云服务器。GitHub Pages 及其 Actions 发布工作流已关闭移除；旧的手动上传项目 `lilin-eco-website` 已删除。
+正式网站使用 GitHub 关联的 ESA Pages 项目 `lilin-eco-pages`，仅托管 `npm run build` 生成的静态 `dist/`，没有动态函数入口、数据库或云服务器。
 
 GitHub 原生自动发布已连接到 `lilin-eco/lilin-eco-website`，生产分支和构建分支均为 `main`。每次推送 `main`，ESA 自动拉取代码、构建并发布生产版本；其他分支不触发构建。根目录 `/`，安装命令 `npm ci`，构建命令 `npm run build`，静态资源目录 `./dist`，环境变量 `ASTRO_TELEMETRY_DISABLED=1`。配置放在 `esa.jsonc`；其中 `404Page` 用于静态站点的自定义 404 页面。不要设置单页应用回退，否则错误地址可能返回首页。
 
 项目需要 Node.js >=22.23.4，本地推荐使用 Node.js 24。ESA 根据 `package.json` 中的 `engines.node` 选择兼容版本；首次构建已自动从默认 Node.js 22.16.0 切换至 24.13.0。排查更新问题时，在 ESA 项目的「部署」页检查对应提交的构建日志和生产版本。
 
-发布链路为：推送 `main` → ESA 拉取 GitHub 源码 → 安装依赖并构建 → ESA Pages 发布生产版本。无需开通 GitHub Pages，也不需要 GitHub Actions 部署任务。源码仓库名为 `lilin-eco-website`，本地 `origin` 为 `https://github.com/lilin-eco/lilin-eco-website.git`；不添加 `public/CNAME`，不设置额外的 `base` 路径。回退时，在 ESA 项目的「部署」页选择历史成功版本发布，或在 GitHub 撤销对应提交后重新推送。
+发布链路为：推送 `main` → ESA 拉取 GitHub 源码 → 安装依赖并构建 → ESA Pages 发布生产版本。源码仓库名为 `lilin-eco-website`，本地 `origin` 为 `https://github.com/lilin-eco/lilin-eco-website.git`。官网在域名根目录发布，不设置额外的 `base` 路径。回退时，在 ESA 项目的「部署」页选择历史成功版本发布，或在 GitHub 撤销对应提交后重新推送。
 
 ## 域名与 ESA Pages 路由
 
@@ -98,7 +98,7 @@ GitHub 原生自动发布已连接到 `lilin-eco/lilin-eco-website`，生产分�
 (http.host eq "lilinst.com") or (http.host eq "www.lilinst.com")
 ```
 
-正常访问直接由 ESA Pages 的静态资源提供，不再回源 GitHub Pages。路由的异常回源已关闭，旧的 GitHub 回源 Host、SNI 及协议覆盖规则已删除。两条 ESA 代理 DNS 记录是 CNAME 接入与路由生效的必要配置，继续保留；其中历史源站字段不参与当前全量 Pages 路由。不要关闭 Pages 路由或重新开启异常回源。
+正常访问直接由 ESA Pages 的静态资源提供。两条 ESA 代理 DNS 记录是 CNAME 接入与路由生效的必要配置，其源站字段使用当前项目的默认域名 `lilin-eco-pages-1764094378255018.debug.er.aliyun-esa.net` 作为接入占位，正式流量由上述路由直接处理，不访问该调试域名。路由的异常回源关闭，站点没有额外的回源覆盖规则；不要关闭 Pages 路由或开启异常回源。
 
 站点规范链接、Open Graph 地址与 sitemap 由 `astro.config.mjs` 的 `site` 生成，`public/robots.txt` 使用官网域名。临时预览域名仅供调试，需使用控制台生成的 60 分钟访问令牌；正式域名无需令牌。不要在仓库或工作流中保存令牌、AccessKey 或本机 OAuth 凭据。
 
