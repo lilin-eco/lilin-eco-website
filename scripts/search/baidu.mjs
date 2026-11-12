@@ -12,7 +12,8 @@ export function pushToBaidu(url, token) {
     const body = url + '\n';
     const request = https.request({
       hostname: 'ziyuan.baidu.com', servername: 'ziyuan.baidu.com', port: 443,
-      path: `/urls?site=${encodeURIComponent(SITE)}&token=${encodeURIComponent(token)}`,
+      // Baidu expects the literal verified site value in this query parameter.
+      path: `/urls?site=${SITE}&token=${encodeURIComponent(token)}`,
       method: 'POST', headers: { Host: 'data.zz.baidu.com', 'Content-Type': 'text/plain; charset=utf-8',
         'Content-Length': Buffer.byteLength(body) },
     }, response => {

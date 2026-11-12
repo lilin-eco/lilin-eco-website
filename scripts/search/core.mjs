@@ -60,6 +60,18 @@ export function changedPages(manifest, state) {
 
 export const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
+export function baiduFailure(result) {
+  // Emit fixed labels only, never the upstream response text or request URL.
+  const message = String(result?.message ?? '').toLowerCase();
+  if (/quota|limit|配额|限额/.test(message)) return 'daily-quota-exhausted';
+  if (/token/.test(message)) return 'credential-rejected';
+  if (/site/.test(message)) return 'site-rejected';
+  if (/empty|content/.test(message)) return 'invalid-content';
+  if (/not_same_site/.test(message) || result?.not_same_site?.length) return 'site-mismatch';
+  if (result?.not_valid?.length) return 'invalid-url';
+  return 'unclassified-api-error';
+}
+
 export async function getProductionManifest(fetcher = fetch) {
   const response = await fetcher(`${SITE}/search-manifest.json?verify=${Date.now()}`, {
     redirect: 'error', headers: { 'Cache-Control': 'no-cache' }, signal: AbortSignal.timeout(15000),
@@ -103,7 +115,7 @@ export async function submitChanges({ manifest, state, submit, save, stillCurren
     const result = await submit(page.url);
     if (result?.error || result?.success !== 1 || result?.not_same_site?.length || result?.not_valid?.length) {
       const code = Number.isInteger(result?.error) ? result.error : 'invalid-response';
-      throw new Error(`Baidu did not accept the URL (code ${code}); remaining URLs kept pending`);
+      throw new Error(`Baidu did not accept the URL (code ${code}, ${baiduFailure(result)}); remaining URLs kept pending`);
     }
     next.pages[page.url] = page.hash;
     await save(next);
