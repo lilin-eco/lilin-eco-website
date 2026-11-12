@@ -32,6 +32,7 @@ const isCurrent = (href: string) => Astro.url.pathname.startsWith(href);
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="theme-color" content="#f8f7f3" />
+    {Astro.url.pathname === '/' && <meta name="baidu-site-verification" content="codeva-riOG52ahzO" />}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large'} />
     {!noindex && <link rel="canonical" href={canonical} />}
