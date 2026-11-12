@@ -11,11 +11,11 @@ const contacts = [
 ];
 ---
 <BaseLayout title="联系我们 · 礼林生态">
-  <PageHeading label="CONTACT US" title="聊聊您的项目需求" description="从一次沟通开始，理解业务中的问题与期待。" />
+  <PageHeading label="CONTACT US" title="聊聊您的需要" description="从一次沟通开始，了解具体事项与服务期待。" />
   <section class="wrap content-section">
-    <div class="contact-intro"><h2>{company.fullName}</h2><p>欢迎就工程项目软件解决方案、定制开发与实施服务与我们联系。</p></div>
+    <div class="contact-intro"><h2>{company.fullName}</h2><p>欢迎沟通软件与信息技术、工程与生态、设备物资及运营生活服务需求。</p></div>
     <dl class="contact-list">{contacts.map(item => <div class="contact-item"><dt>{item.label}<span>{item.en}</span></dt><dd>{item.href ? <a href={item.href}>{item.value}</a> : item.value || '待公布'}</dd></div>)}</dl>
     <CompanyInfoSource />
-    <div class="intro-spread contact-guide culture-section"><CultureMark word="善念" /><div><p class="eyebrow">沟通之前</p><h2>从实际工作，<br />说起您的需要</h2></div><ol class="guide-list"><li><strong>希望解决什么问题</strong><span>日常工程项目管理中，需要改进的信息、流程或资料问题。</span></li><li><strong>目前如何开展工作</strong><span>现有工作流程、正在使用的系统，以及数据整理情况。</span></li><li><strong>哪些人需要参与</strong><span>涉及的使用角色、业务环节与协同对象。</span></li><li><strong>希望如何推进</strong><span>预期建设范围、实施安排与需要沟通的交付事项。</span></li></ol></div>
+    <div class="intro-spread contact-guide culture-section"><CultureMark word="善念" /><div><p class="eyebrow">沟通之前</p><h2>从具体事项，<br />说起您的需要</h2></div><ol class="guide-list"><li><strong>希望办理什么事项</strong><span>软件开发、工程配套、生态技术、设备物资，或日常运营与生活服务。</span></li><li><strong>目前有哪些条件</strong><span>服务地点、现场或系统情况，以及已有的材料、设备或资料。</span></li><li><strong>需要怎样的服务</strong><span>希望开展的具体工作、服务周期及双方配合事项。</span></li><li><strong>希望如何推进</strong><span>预期时间、交付要求及需要进一步确认的问题。</span></li></ol></div>
   </section>
 </BaseLayout>

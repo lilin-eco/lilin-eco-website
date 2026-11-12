@@ -28,14 +28,15 @@ npm run preview
 ```text
 src/pages/index.astro        官网首页
 src/pages/about.astro        公司介绍
-src/pages/solutions.astro    产品与解决方案
-src/pages/cases.astro        项目案例
-src/pages/services.astro     实施与服务
-src/pages/business.astro     原业务地址，跳转至解决方案
+src/pages/solutions.astro    五个业务领域
+src/pages/cases.astro        项目与实践（在研软件方向）
+src/pages/services.astro     服务方式
+src/pages/business.astro     原业务地址，跳转至业务领域
 src/pages/contact.astro      联系我们
 src/pages/news/              新闻列表与详情
 src/content/news/            Markdown 新闻内容
 src/data/company.ts          公司名称与对外联系方式
+src/data/business-scope.ts   公司提供的完整经营范围
 src/styles/global.css        全站样式与移动端适配
 src/components/              背景文化字、页头、新闻列表与联系入口
 src/assets/                  建筑光影与工作台图片（构建时输出响应式 WebP）
@@ -44,17 +45,17 @@ astro.config.mjs            Astro 及正式网站地址配置
 esa.jsonc                   ESA Pages 静态构建与 404 页面配置
 ```
 
-网站采用 E「柔和人文」视觉：米白底色、灰绿点缀、宋体标题、开放式图文排版。首页、解决方案、项目案例、实施服务、公司介绍、新闻列表及详情、联系页和 404 页共用这套样式。320px 起的手机、平板及桌面使用响应式布局；移动导航支持原生展开、外部点击与 Escape 关闭。
+网站采用 E「柔和人文」视觉：米白底色、灰绿点缀、宋体标题、开放式图文排版。首页、业务领域、项目与实践、服务方式、公司介绍、新闻列表及详情、联系页和 404 页共用这套样式。320px 起的手机、平板及桌面使用响应式布局；移动导航支持原生展开、外部点击与 Escape 关闭。
 
 “善心、善念、善行”以淡色背景文字融入首页及内页。背景字的透明度统一为 4.5%，标记为装饰内容，不进入屏幕阅读器的正文。颜色、间距和移动断点维护在 `src/styles/global.css`；文字层由 `src/components/CultureMark.astro` 渲染。
 
 ## 维护内容
 
-公司全称由用户确认：**达州礼林生态科技有限责任公司**。业务为工程项目软件服务；对外文案以实际业务问题和解决方案为主。解决方案页面描述建设思路，不代表已发布产品清单。首页图片为生成的建筑与工作场景意象，不作为公司实际办公场所或项目案例。
+公司全称由用户确认：**达州礼林生态科技有限责任公司**。官网依据公司于 2026-11-12 提供的完整经营范围，整理为数字技术与信息服务、工程与空间服务、生态与绿色技术、设备租赁与物资配套、运营与生活服务五个领域。首页图片为生成的建筑与工作场景意象，不作为公司实际办公场所或项目案例。
 
-成立日期、注册资本、法定代表人、注册地址、公开电话及邮箱依据免登录可见的企业资料收录信息补充，来源与查询方式记录在 `src/data/company-public-records.json`，页面显示核对日期及来源链接。注册地址与办公地址分别维护，未将登记地址标为实际办公地点。经营范围仅提取与软件服务相关的项目，不表示拥有工程施工资质。
+成立日期、注册资本、法定代表人、注册地址、公开电话及邮箱依据免登录可见的企业资料收录信息补充，来源与查询方式记录在 `src/data/company-public-records.json`，页面显示核对日期及来源链接。注册地址与办公地址分别维护，未将登记地址标为实际办公地点。经营范围按公司本次提供的原文保存于 `src/data/business-scope.ts`：55 项一般项目、8 项许可项目，在关于页面中分别展开。经营范围不作为已取得资质、许可证件或已承接全部业务的证明。
 
-更新公司资料请编辑 `src/data/company.ts`：phone、email 为公开联系方式；address 仅填写确认的实际办公地址；registeredAddress 为登记地址。地址未确认时联系页显示注册地址，电话和邮箱支持拨号及邮件链接。项目案例、资质、客户名录仍待真实资料支持。服务方向与实施步骤也集中维护在此文件；页面内容分别维护在 about、solutions、cases、services 页面。
+更新公司资料请编辑 `src/data/company.ts`：phone、email 为公开联系方式；address 仅填写确认的实际办公地址；registeredAddress 为登记地址。地址未确认时联系页显示注册地址，电话和邮箱支持拨号及邮件链接。五个业务领域、服务步骤及在研项目也集中维护在此文件。两个软件方向依据会话中的实际研发进度列为“研发中”，不表述为已交付产品、客户案例或已取得软著；不公开内部知识库、工时或私有开发资料。其他项目案例、资质、客户名录须有可公开的真实材料支持。页面地址保持不变。
 
 新增新闻：在 `src/content/news/` 添加 `.md` 文件，例如 `company-update.md`：
 
