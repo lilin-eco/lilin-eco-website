@@ -1,0 +1,10 @@
+{
+  "name": "lilin-eco-website",
+  "description": "礼林生态官方网站",
+  "installCommand": "npm ci",
+  "buildCommand": "npm run build",
+  "assets": {
+    "directory": "./dist",
+    "notFoundStrategy": "404Page"
+  }
+}

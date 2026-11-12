@@ -1,9 +1,9 @@
 # 礼林生态官方网站
 
-基于 Astro 官方 Minimal 模板初始化，通过 GitHub Actions 构建并发布至 GitHub Pages。
+基于 Astro 的静态企业官网，正式网站由阿里云 ESA Pages 托管，GitHub 保存源码，GitHub Pages 保留为备用站。
 
 - 网站：https://lilinst.com/
-- GitHub Pages 源站：https://lilin-eco.github.io/
+- GitHub Pages 备用站：https://lilin-eco.github.io/
 - 仓库：https://github.com/lilin-eco/lilin-eco.github.io
 - Node.js：推荐 24 LTS（见 `.nvmrc`）
 - 包管理器：npm，提交 `package-lock.json` 以保持依赖一致
@@ -43,6 +43,7 @@ src/assets/                  建筑光影与工作台图片（构建时输出响
 public/                     静态资源
 astro.config.mjs            Astro 及正式网站地址配置
 .github/workflows/deploy.yml GitHub Pages 自动发布工作流
+esa.jsonc                   ESA Pages 静态构建与 404 页面配置
 ```
 
 网站采用 E「柔和人文」视觉：米白底色、灰绿点缀、宋体标题、开放式图文排版。首页、解决方案、项目案例、实施服务、公司介绍、新闻列表及详情、联系页和 404 页共用这套样式。320px 起的手机、平板及桌面使用响应式布局；移动导航支持原生展开、外部点击与 Escape 关闭。
@@ -73,13 +74,17 @@ draft: true
 
 确认正文可公开后，将 `draft` 改为 `false` 并推送到 main。文章按日期倒序展示，首页自动展示最近两篇；草稿不进入列表、详情路由和 sitemap。文件名对应地址，例如 `/news/company-update/`。现有新闻为真实的网站上线和本次官网栏目更新公告。
 
-## 发布
+## 发布与托管
 
-推送到 `main` 分支会自动触发构建和部署，也可在 GitHub Actions 中手动运行 `Deploy to GitHub Pages`。
+正式网站使用 ESA Pages 项目 `lilin-eco-website`。本次通过阿里云官方 ESA Pages 部署技能上传 `npm run build` 生成的真实 `dist/`，仅托管静态文件，没有动态函数入口、数据库或云服务器。
 
-Pages 的构建来源需设为 **GitHub Actions**。本仓库是组织主页仓库 `lilin-eco.github.io`，发布在域名根目录，因此不设置额外的 `base` 路径。
+GitHub 原生自动发布连接尚待账号授权。完成连接时仅选择组织 `lilin-eco` 下的官网仓库 `lilin-eco.github.io`，生产分支和构建分支均设为 `main`，根目录 `/`，安装命令 `npm ci`，构建命令 `npm run build`，静态资源目录 `./dist`，环境变量 `ASTRO_TELEMETRY_DISABLED=1`。配置已放在 `esa.jsonc`；其中 `404Page` 用于静态站点的自定义 404 页面。不要设置单页应用回退，否则错误地址可能返回首页。
 
-## 域名与 ESA 代理
+项目需要 Node.js >=22.23.4，本地和 GitHub Actions 使用 Node.js 24。ESA 构建环境也必须满足该版本要求；连接完成后应先验证一次云端构建成功，再依赖推送自动发布。授权完成前，推送 GitHub 只更新备用站，正式站仍需发布到 ESA Pages。
+
+推送 `main` 会通过现有 GitHub Actions 自动更新 GitHub Pages 备用站，也可手动运行 `Deploy to GitHub Pages`。GitHub Pages 的构建来源保持 **GitHub Actions**，自定义域名保持为空，不添加 `public/CNAME`。本仓库发布在域名根目录，不设置额外的 `base` 路径。
+
+## 域名与 ESA Pages 路由
 
 官网域名为 `lilinst.com`，`www.lilinst.com` 同样通过阿里云 ESA 免费版访问。站点使用 CNAME 接入，阿里云云解析保留权威 DNS。ESA 加速区域为全球（不包含中国内地）。
 
@@ -89,15 +94,21 @@ Pages 的构建来源需设为 **GitHub Actions**。本仓库是组织主页仓�
 | `www` | CNAME | `www.lilinst.com.a1.initxa.com` |
 | `_esaauth` | TXT | ESA 分配的站点归属验证码，保留此记录 |
 
-ESA 的两条代理记录均回源到 `lilin-eco.github.io`，回源 Host 与 SNI 同为 `lilin-eco.github.io`，回源协议为 HTTPS，并校验源站证书。访客证书使用 ESA 免费证书。
+域名沿用已有 DNS 和免费 HTTPS 证书，无需更换解析目标。站点 ID 为 `188622332487808`，Pages 路由 `lilin-website-pages`（配置 ID `529631981656064`）将以下主机的所有路径交给 `lilin-eco-website` 的生产版本：
 
-本方案由 ESA 代理现有 GitHub Pages，GitHub Pages 的自定义域名保持为空，不添加 `public/CNAME`；否则源站可能将请求重定向到前端域名，形成重定向循环。站点规范链接、Open Graph 地址与 sitemap 由 `astro.config.mjs` 的 `site` 生成，`public/robots.txt` 使用官网域名。
+```text
+(http.host eq "lilinst.com") or (http.host eq "www.lilinst.com")
+```
 
-ESA 免费套餐为 12 个月，不启用自动续费；到期前应在 ESA 控制台核对续用安排。HTTPS、回源与缓存规则在 ESA 控制台维护；源码推送 main 后继续通过 GitHub Actions 更新源站。
+正常访问直接由 ESA Pages 的静态资源提供，不再跨境回源 GitHub Pages。路由启用异常回源，原有两条代理记录及 HTTPS 回源配置保留为备用：源站、Host 和 SNI 均为 `lilin-eco.github.io`，且校验证书。需要回退时，在 ESA 控制台关闭上述 Pages 路由即可恢复此前的 GitHub Pages 代理方式，DNS 不变。
+
+站点规范链接、Open Graph 地址与 sitemap 由 `astro.config.mjs` 的 `site` 生成，`public/robots.txt` 使用官网域名。临时预览域名仅供调试，需使用控制台生成的 60 分钟访问令牌；正式域名无需令牌。不要在仓库或工作流中保存令牌、AccessKey 或本机 OAuth 凭据。
+
+当前函数与 Pages 账户模式为 `er_freemode`，现有 ESA 免费站点套餐为 12 个月，未启用自动续费；未开通额外付费资源。套餐到期前应在 ESA 控制台核对续用安排。本方案仍使用全球（不包含中国内地）区域，不等同于接入中国内地节点或完成 ICP 备案。
 
 ```sh
 gh run list --repo lilin-eco/lilin-eco.github.io --limit 5
 gh api repos/lilin-eco/lilin-eco.github.io/pages
 ```
 
-部署参考：[Astro 官方 GitHub Pages 指南](https://docs.astro.build/en/guides/deploy/github/)。
+部署参考：[ESA Pages 构建与路由](https://help.aliyun.com/zh/edge-security-acceleration/esa/user-guide/build-pages)、[连接 GitHub 仓库](https://www.alibabacloud.com/help/zh/edge-security-acceleration/esa/user-guide/connect-pages-to-github)、[Astro GitHub Pages 指南](https://docs.astro.build/en/guides/deploy/github/)。
