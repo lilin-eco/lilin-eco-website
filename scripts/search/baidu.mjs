@@ -1,7 +1,7 @@
 import https from 'node:https';
 import { SITE, validateUrl } from './core.mjs';
 
-export function pushToBaidu(url, token) {
+export function pushToBaidu(url, token, requestImpl = https.request) {
   validateUrl(url);
   if (!token || !/^[A-Za-z0-9_-]+$/.test(token)) throw new Error('Missing or invalid BAIDU_PUSH_TOKEN secret');
   // Baidu documents data.zz.baidu.com over HTTP. Its HTTPS certificate currently
@@ -10,7 +10,7 @@ export function pushToBaidu(url, token) {
   // validation bound to ziyuan.baidu.com; never disable TLS or fall back to HTTP.
   return new Promise((resolve, reject) => {
     const body = url + '\n';
-    const request = https.request({
+    const request = requestImpl({
       hostname: 'ziyuan.baidu.com', servername: 'ziyuan.baidu.com', port: 443,
       // Baidu expects the literal verified site value in this query parameter.
       path: `/urls?site=${SITE}&token=${encodeURIComponent(token)}`,

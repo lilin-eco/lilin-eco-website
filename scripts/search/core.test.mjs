@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdtemp, mkdir, writeFile, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
+import { EventEmitter } from 'node:events';
 import { SITE, buildManifest, hashHtml, pageHash, validateManifest, changedPages, waitForDeployment, submitChanges } from './core.mjs';
 import { pushToBaidu } from './baidu.mjs';
 
@@ -71,7 +72,8 @@ test('superseded version exits without submitting or waiting on an obsolete buil
     fetcher: () => { throw new Error('must not fetch'); }, attempts: 1 }), null);
 });
 
-test('only accepted URLs advance checkpoint, even when later URL hits quota', async () => {
+test('only accepted URLs advance checkpoint, even when later URL hits quota', async t => {
+  t.mock.method(console, 'log', () => {});
   const saved = [];
   let calls = 0;
   await assert.rejects(submitChanges({ manifest, state: { schemaVersion: 1, pages: {} },
@@ -108,4 +110,33 @@ test('API refuses foreign URLs and invalid/missing credentials before any networ
   assert.throws(() => pushToBaidu('https://example.com/', 'anything'));
   assert.throws(() => pushToBaidu(SITE + '/', ''));
   assert.throws(() => pushToBaidu(SITE + '/', 'bad&token=value'));
+});
+
+test('Baidu transport keeps literal site query, verified HTTPS SNI, API host and newline body', async () => {
+  let options, body;
+  const request = (settings, callback) => {
+    options = settings;
+    const socket = new EventEmitter();
+    socket.setTimeout = () => socket;
+    socket.end = value => {
+      body = value;
+      const response = new EventEmitter();
+      response.statusCode = 200;
+      response.setEncoding = () => {};
+      callback(response);
+      response.emit('data', JSON.stringify({ success: 1, remain: 9 }));
+      response.emit('end');
+    };
+    return socket;
+  };
+  assert.deepEqual(await pushToBaidu(SITE + '/', 'unit-test', request), { success: 1, remain: 9 });
+  assert.equal(options.hostname, 'ziyuan.baidu.com');
+  assert.equal(options.servername, 'ziyuan.baidu.com');
+  assert.equal(options.headers.Host, 'data.zz.baidu.com');
+  assert.equal(options.port, 443);
+  assert.equal(options.method, 'POST');
+  assert.equal(options.path, '/urls?site=https://www.lilinst.com&token=unit-test');
+  assert.equal(options.rejectUnauthorized, undefined);
+  assert.equal(body, SITE + '/\n');
+  assert.equal(options.headers['Content-Length'], Buffer.byteLength(body));
 });

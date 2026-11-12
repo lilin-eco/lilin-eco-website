@@ -148,7 +148,7 @@ npm run check:seo
 
 成功记录保存于独立分支 **`codex/baidu-push-state`** 的 `.github/baidu-state.json`，只含公开网址、摘要和提交版本，不含任何密钥。工作流的 `contents: write` 用于维护该分支，不写入 main；ESA 仅自动部署 main，不会因更新记录重复部署。请勿删除状态分支或将它合并回 main。每个网址得到百度明确接收后才保存其摘要；配额不足、凭据失效或接口故障会令工作流报错，尚未成功的网址保留待提交，下次部署或手动重跑继续处理。少量请求在接收后、记录保存前中断时可能重复提交，采用可重试设计防止遗漏。
 
-百度界面目前提供 HTTP 接口，`data.zz.baidu.com` 的 HTTPS 证书存在主机名不匹配。实现通过百度同一服务的 `ziyuan.baidu.com` 建立验证证书的 HTTPS 连接，使用 `Host: data.zz.baidu.com` 路由到提交接口，并明确保持 TLS SNI 为 `ziyuan.baidu.com`。不关闭证书检查、不降级为 HTTP、不跟随接口重定向；如果百度调整此路由，工作流会报错，需复核接口，不能直接放开 TLS。
+百度界面目前提供 HTTP 接口，`data.zz.baidu.com` 的 HTTPS 证书存在主机名不匹配。实现通过百度同一服务的 `ziyuan.baidu.com` 建立验证证书的 HTTPS 连接，使用 `Host: data.zz.baidu.com` 路由到提交接口，并明确保持 TLS SNI 为 `ziyuan.baidu.com`。`site` 参数须保留平台给出的原始 `https://www.lilinst.com` 字面值，百分号编码该参数会被此接口以 400 拒绝；请求格式已有回归测试。不关闭证书检查、不降级为 HTTP、不跟随接口重定向；如果百度调整此路由，工作流会报错，需复核接口，不能直接放开 TLS。
 
 维护检查：
 
