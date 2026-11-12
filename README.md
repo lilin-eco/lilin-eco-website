@@ -76,11 +76,11 @@ draft: true
 
 ## 发布与托管
 
-正式网站使用 ESA Pages 项目 `lilin-eco-website`。本次通过阿里云官方 ESA Pages 部署技能上传 `npm run build` 生成的真实 `dist/`，仅托管静态文件，没有动态函数入口、数据库或云服务器。
+正式网站使用 GitHub 关联的 ESA Pages 项目 `lilin-eco-pages`，仅托管 `npm run build` 生成的静态 `dist/`，没有动态函数入口、数据库或云服务器。此前通过阿里云官方部署技能上传的 `lilin-eco-website` 项目保留为回退版本，不接收自动更新。
 
-GitHub 原生自动发布连接尚待账号授权。完成连接时仅选择组织 `lilin-eco` 下的官网仓库 `lilin-eco.github.io`，生产分支和构建分支均设为 `main`，根目录 `/`，安装命令 `npm ci`，构建命令 `npm run build`，静态资源目录 `./dist`，环境变量 `ASTRO_TELEMETRY_DISABLED=1`。配置已放在 `esa.jsonc`；其中 `404Page` 用于静态站点的自定义 404 页面。不要设置单页应用回退，否则错误地址可能返回首页。
+GitHub 原生自动发布已连接到 `lilin-eco/lilin-eco.github.io`，生产分支和构建分支均为 `main`。每次推送 `main`，ESA 自动拉取代码、构建并发布生产版本；其他分支不触发构建。根目录 `/`，安装命令 `npm ci`，构建命令 `npm run build`，静态资源目录 `./dist`，环境变量 `ASTRO_TELEMETRY_DISABLED=1`。配置放在 `esa.jsonc`；其中 `404Page` 用于静态站点的自定义 404 页面。不要设置单页应用回退，否则错误地址可能返回首页。
 
-项目需要 Node.js >=22.23.4，本地和 GitHub Actions 使用 Node.js 24。ESA 构建环境也必须满足该版本要求；连接完成后应先验证一次云端构建成功，再依赖推送自动发布。授权完成前，推送 GitHub 只更新备用站，正式站仍需发布到 ESA Pages。
+项目需要 Node.js >=22.23.4，本地和 GitHub Actions 使用 Node.js 24。ESA 根据 `package.json` 中的 `engines.node` 选择兼容版本；首次构建已自动从默认 Node.js 22.16.0 切换至 24.13.0。排查更新问题时，在 ESA 项目的「部署」页检查对应提交的构建日志和生产版本。
 
 推送 `main` 会通过现有 GitHub Actions 自动更新 GitHub Pages 备用站，也可手动运行 `Deploy to GitHub Pages`。GitHub Pages 的构建来源保持 **GitHub Actions**，自定义域名保持为空，不添加 `public/CNAME`。本仓库发布在域名根目录，不设置额外的 `base` 路径。
 
@@ -94,7 +94,7 @@ GitHub 原生自动发布连接尚待账号授权。完成连接时仅选择组�
 | `www` | CNAME | `www.lilinst.com.a1.initxa.com` |
 | `_esaauth` | TXT | ESA 分配的站点归属验证码，保留此记录 |
 
-域名沿用已有 DNS 和免费 HTTPS 证书，无需更换解析目标。站点 ID 为 `188622332487808`，Pages 路由 `lilin-website-pages`（配置 ID `529631981656064`）将以下主机的所有路径交给 `lilin-eco-website` 的生产版本：
+域名沿用已有 DNS 和免费 HTTPS 证书，无需更换解析目标。站点 ID 为 `188622332487808`，Pages 路由 `lilin-website-pages`（配置 ID `529631981656064`）将以下主机的所有路径交给 `lilin-eco-pages` 的生产版本：
 
 ```text
 (http.host eq "lilinst.com") or (http.host eq "www.lilinst.com")
