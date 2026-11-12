@@ -4,28 +4,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeading from '../components/PageHeading.astro';
 import CultureMark from '../components/CultureMark.astro';
 import ContactInvite from '../components/ContactInvite.astro';
-import CompanyInfoSource from '../components/CompanyInfoSource.astro';
-import BusinessScope from '../components/BusinessScope.astro';
 import architecture from '../assets/architecture.png';
 import { company } from '../data/company';
 ---
-<BaseLayout title="关于礼林 · 礼林生态" description="了解达州礼林生态科技有限责任公司的企业信息、五个业务领域、完整经营范围，以及善心、善念、善行的公司文化。">
+<BaseLayout title="关于礼林 · 礼林生态" description="礼林生态成立于2023年，立足四川达州，业务涵盖数字技术、工程服务、生态技术与生活服务，秉持善心、善念、善行的企业理念。">
   <PageHeading label="ABOUT LILIN" title="心怀善意，行于实处" description="把善心、善念、善行，融入每一次沟通与服务。" />
   <section class="wrap content-section">
     <div class="intro-spread about-intro">
       <div class="about-portrait"><Image src={architecture} alt="自然光影下的建筑细节" widths={[640, 960]} sizes="(max-width: 700px) 100vw, 42vw" format="webp" loading="lazy" /></div>
-      <div class="about-text"><p class="eyebrow">关于我们</p><h2>{company.fullName}</h2><p>礼林生态成立于{company.establishedDate}，注册于{company.registeredRegion}。经营范围涉及数字技术、工程与空间、生态与绿色技术、设备物资配套，以及运营与生活服务。</p><p>我们关注工作与生活中的具体需要：软件如何衔接业务，空间与设施如何使用维护，环境与设备如何配套，日常服务如何落实。每一次合作，都从理解实际情况、明确工作范围开始。</p><a class="text-link" href="/solutions/">了解业务领域 <span aria-hidden="true">→</span></a></div>
+      <div class="about-text"><p class="eyebrow">公司简介</p><h2>{company.fullName}</h2><p>礼林生态成立于2023年，立足四川达州，业务涵盖软件开发与信息服务、工程与空间服务、生态与绿色技术、设备物资配套及运营生活服务。</p><p>我们坚持以实际需求为出发点，将技术应用与日常服务相结合，以认真负责的态度，做好每一项工作。</p><a class="text-link" href="/solutions/">了解业务领域 <span aria-hidden="true">→</span></a></div>
     </div>
-    <section class="company-records" aria-labelledby="registration-title">
-      <p class="eyebrow">COMPANY INFORMATION</p><h2 id="registration-title">企业登记信息</h2>
-      <dl class="registration-grid"><div><dt>成立日期</dt><dd>{company.establishedDate}</dd></div><div><dt>注册资本</dt><dd>{company.registeredCapital}</dd></div><div><dt>法定代表人</dt><dd>{company.legalRepresentative}</dd></div><div><dt>登记地区</dt><dd>{company.registeredRegion}</dd></div><div class="registration-address"><dt>注册地址</dt><dd>{company.registeredAddress}</dd></div></dl>
-      <CompanyInfoSource />
-    </section>
-    <BusinessScope />
     <section class="culture-story culture-section">
       <CultureMark word="善念" position="right" />
-      <p class="eyebrow">我们的处事之道</p><h2>让用心，体现在每一件事里</h2><p>“善心、善念、善行”是礼林的公司文化。从技术方案到现场配套，从日常维护到生活服务，我们希望把这份用心落实在具体工作中。</p>
-      <div class="culture-practices"><div><h3>善心 · 认真倾听</h3><p>尊重每一份需要，了解服务对象的实际情况，耐心沟通。</p></div><div><h3>善念 · 审慎思考</h3><p>结合使用条件和工作范围考虑方案，把事项与约定讲清楚。</p></div><div><h3>善行 · 踏实行动</h3><p>按约推进每一项工作，关注细节，认真核对交付与服务结果。</p></div></div>
+      <p class="eyebrow">企业理念</p><h2>善心、善念、善行</h2>
+      <div class="culture-practices"><div><h3>善心</h3><p>以诚待人，尊重每一份信任。</p></div><div><h3>善念</h3><p>用心思考，让方案贴合实际。</p></div><div><h3>善行</h3><p>踏实做事，将承诺落实于行动。</p></div></div>
     </section>
   </section>
   <ContactInvite />

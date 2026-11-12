@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeading from '../components/PageHeading.astro';
 import ContactInvite from '../components/ContactInvite.astro';
+import BusinessScope from '../components/BusinessScope.astro';
 import { businessAreas } from '../data/company';
 ---
 <BaseLayout title="业务领域 · 礼林生态" description="了解礼林生态的五个业务领域：数字技术与信息服务、工程与空间服务、生态与绿色技术、设备租赁与物资配套、运营与生活服务。">
@@ -13,7 +14,7 @@ import { businessAreas } from '../data/company';
       <div><span class="section-number">{item.number} / BUSINESS</span><h2>{item.title}</h2><p class="solution-context">{item.description}</p></div>
       <div class="solution-body"><h3>从具体场景出发</h3><p>{item.scene}</p><ul class="solution-points">{item.points.map(point => <li>{point}</li>)}</ul><h3>明确工作与交付</h3><p>{item.approach}</p><p>{item.result}</p>{item.licensedNote && <p class="scope-statement">{item.licensedNote}</p>}<a class="text-link" href="/contact/">沟通这类需求 <span aria-hidden="true">→</span></a></div>
     </section>)}
-    <div class="business-range-link"><p>需要核对具体业务条目？</p><a class="text-link" href="/about/#business-scope">查看完整经营范围 <span aria-hidden="true">→</span></a></div>
+    <BusinessScope />
   </section>
   <ContactInvite />
 </BaseLayout>
