@@ -2,7 +2,7 @@
 
 基于 Astro 的静态企业官网，正式网站由阿里云 ESA Pages 托管，GitHub 保存源码并触发自动发布。
 
-- 网站：https://lilinst.com/
+- 网站：https://www.lilinst.com/
 - 仓库：https://github.com/lilin-eco/lilin-eco-website
 - Node.js：推荐 24 LTS（见 `.nvmrc`）
 - 包管理器：npm，提交 `package-lock.json` 以保持依赖一致
@@ -40,6 +40,9 @@ src/data/business-scope.ts   公司提供的完整经营范围
 src/styles/global.css        全站样式与移动端适配
 src/components/              背景文化字、页头、新闻列表与联系入口
 src/assets/                  建筑光影与工作台图片（构建时输出响应式 WebP）
+src/lib/seo.ts               页面 SEO 文案与结构化数据
+src/pages/robots.txt.ts      根据正式域名生成爬虫入口
+scripts/check-seo.mjs        构建后的 SEO 和内部链接检查
 public/                     静态资源
 astro.config.mjs            Astro 及正式网站地址配置
 esa.jsonc                   ESA Pages 静态构建与 404 页面配置
@@ -101,7 +104,7 @@ GitHub 原生自动发布已连接到 `lilin-eco/lilin-eco-website`，生产分�
 
 正常访问直接由 ESA Pages 的静态资源提供。两条 ESA 代理 DNS 记录是 CNAME 接入与路由生效的必要配置，其源站字段使用当前项目的默认域名 `lilin-eco-pages-1764094378255018.debug.er.aliyun-esa.net` 作为接入占位，正式流量由上述路由直接处理，不访问该调试域名。路由的异常回源关闭，站点没有额外的回源覆盖规则；不要关闭 Pages 路由或开启异常回源。
 
-站点规范链接、Open Graph 地址与 sitemap 由 `astro.config.mjs` 的 `site` 生成，`public/robots.txt` 使用官网域名。临时预览域名仅供调试，需使用控制台生成的 60 分钟访问令牌；正式域名无需令牌。不要在仓库或工作流中保存令牌、AccessKey 或本机 OAuth 凭据。
+站点规范链接、Open Graph 地址、robots.txt 与 sitemap 均由 `astro.config.mjs` 的 `site` 生成，统一为 `https://www.lilinst.com/`。临时预览域名仅供调试，需使用控制台生成的 60 分钟访问令牌；正式域名无需令牌。不要在仓库或工作流中保存令牌、AccessKey 或本机 OAuth 凭据。
 
 当前函数与 Pages 账户模式为 `er_freemode`，现有 ESA 免费站点套餐为 12 个月，未启用自动续费；未开通额外付费资源。套餐到期前应在 ESA 控制台核对续用安排。本方案仍使用全球（不包含中国内地）区域，不等同于接入中国内地节点或完成 ICP 备案。
 
@@ -111,3 +114,25 @@ aliyun esa list-routine-routes --routine-name lilin-eco-pages --region cn-hangzh
 ```
 
 部署参考：[ESA Pages 构建与路由](https://help.aliyun.com/zh/edge-security-acceleration/esa/user-guide/build-pages)、[连接 GitHub 仓库](https://www.alibabacloud.com/help/zh/edge-security-acceleration/esa/user-guide/connect-pages-to-github)。
+
+## 搜索与分享
+
+`src/lib/seo.ts` 集中维护各页标题、摘要和结构化数据；文章使用内容集合中的标题、摘要和真实发布日期。页面输出 Organization、WebSite、对应 WebPage 类型及内页面包屑；已发布文章额外输出 Article。企业结构化数据仅使用已公开的名称、电话和邮箱，不输出已移除的注册地址，也不补造客户、资质或案例。404 输出 `noindex, follow`，不声明规范页面。
+
+分享卡片使用现有建筑光影意象，经 Astro 生成 1200 × 630 JPEG（约 90 KB），不作为办公地点或项目照片。Open Graph、Twitter Card 与结构化数据都使用绝对地址。网页仍为静态 HTML，正文和链接不依赖客户端 JavaScript。
+
+ESA 站点保留原有 HTTPS 跳转，新增两条免费套餐内的请求重定向规则：
+
+| 规则 | ID | 行为 |
+| --- | --- | --- |
+| `seo-legacy-business` | `529673966639104` | `/business`、`/business/`、`/business/index.html` 以 301 跳转到 `https://www.lilinst.com/solutions/` |
+| `seo-canonical-www` | `529674002298880` | `lilinst.com` 以 301 跳转到 `https://www.lilinst.com`，保留路径与查询参数 |
+
+两条规则均保留查询参数，后者不匹配 `www` 主机，避免循环；它们不改变已有 ESA Pages 生产路由。改域名时须同步调整 `astro.config.mjs` 和这两条 ESA 规则。若需要回退，在 ESA 请求重定向中停用对应规则，再回退源码。
+
+```sh
+npm run build
+npm run check:seo
+```
+
+检查覆盖唯一标题与摘要、规范链接、JSON-LD、分享图文件、面包屑、文章元数据、404、草稿隔离、站点地图及内部链接。站点地图仅包含 8 个实际可收录页面，不放草稿、旧跳转页或 404。未绑定百度/Google/Bing 站长账户；需在相应账户验证网站后提交 `https://www.lilinst.com/sitemap.xml`。不填写未经提供的站长验证标记，也不自动生成重复的营销文章。

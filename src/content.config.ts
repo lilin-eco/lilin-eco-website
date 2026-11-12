@@ -7,6 +7,7 @@ const news = defineCollection({
   title: z.string(),
   description: z.string(),
   pubDate: z.coerce.date(),
+  updatedDate: z.coerce.date().optional(),
   category: z.string().default('公司动态'),
   draft: z.boolean().default(false),
  }),

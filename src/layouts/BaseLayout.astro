@@ -1,12 +1,23 @@
 ---
 import '../styles/global.css';
 import { company } from '../data/company';
-interface Props { title?: string; description?: string; }
+import { getImage } from 'astro:assets';
+import architecture from '../assets/architecture.png';
+import { createStructuredData, serializeJsonLd, sitePages } from '../lib/seo';
+interface Props {
+  title?: string; description?: string; noindex?: boolean;
+  article?: { title: string; publishedTime: string; modifiedTime?: string; category: string };
+}
+const pageMetadata = sitePages[Astro.url.pathname];
 const {
-  title = '礼林生态 · 达州礼林生态科技有限责任公司',
-  description = company.description,
+  title = pageMetadata?.title ?? sitePages['/'].title,
+  description = pageMetadata?.description ?? company.description,
+  noindex = false, article,
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
+const socialImage = await getImage({ src: architecture, width: 1200, height: 630, fit: 'cover', format: 'jpg', quality: 80 });
+const imageUrl = new URL(socialImage.src, Astro.site).href;
+const structuredData = createStructuredData({ site: Astro.site!, canonical, title, description, image: imageUrl, article });
 const links = [
   ['/solutions/', '业务领域'], ['/cases/', '项目与实践'], ['/services/', '服务方式'],
   ['/about/', '关于礼林'], ['/news/', '新闻动态'], ['/contact/', '联系我们'],
@@ -22,12 +33,26 @@ const isCurrent = (href: string) => Astro.url.pathname.startsWith(href);
     <meta name="description" content={description} />
     <meta name="theme-color" content="#f8f7f3" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="canonical" href={canonical} />
+    <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large'} />
+    {!noindex && <link rel="canonical" href={canonical} />}
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={article ? 'article' : 'website'} />
+    <meta property="og:site_name" content="礼林生态" />
     <meta property="og:locale" content="zh_CN" />
     <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:alt" content="礼林生态官网建筑与自然光影意象" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+    <meta name="twitter:image:alt" content="礼林生态官网建筑与自然光影意象" />
+    {article && <><meta property="article:published_time" content={article.publishedTime} />{article.modifiedTime && <meta property="article:modified_time" content={article.modifiedTime} />}<meta property="article:section" content={article.category} /></>}
+    {!noindex && <script type="application/ld+json" set:html={serializeJsonLd(structuredData)} />}
   </head>
   <body>
     <a class="skip-link" href="#main">跳转到正文</a>
