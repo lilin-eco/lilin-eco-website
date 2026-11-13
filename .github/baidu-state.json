@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "commit": "5bb30acc23f809c8fb6a7959265fb49317d8b931",
+  "commit": "ce31c266609996192ae31002402a5f1f8f6581e1",
   "pages": {
     "https://www.lilinst.com/": "eed02bd7d1e2d29b2cab789cedb6ea05d452730c1882a3a6f85b617556c5093f",
     "https://www.lilinst.com/about/": "5d61752fadd9e8a790370d20625b7a8e02fce2ba8aa5224ae1a832644a590283",
@@ -9,6 +9,7 @@
     "https://www.lilinst.com/services/": "75d7e1f3facd2a9100ec00ddd263cda80c876ca8f447f77d221e5634f063c171",
     "https://www.lilinst.com/news/": "a1e5fd49c155d78816e32f7083cf9850e6e1792bb2fb8672741567f29c1b82f4",
     "https://www.lilinst.com/contact/": "d55ebcc703bd8d7f9f5e17454fd45dfc8b8f7e4fd81f7e75784a3d0123aeed84",
-    "https://www.lilinst.com/news/site-launch/": "d1b8d321c66564979c4c0208fbc41c6090a7d90fb0270a2e9da6e778fc940426"
+    "https://www.lilinst.com/news/site-launch/": "d1b8d321c66564979c4c0208fbc41c6090a7d90fb0270a2e9da6e778fc940426",
+    "https://www.lilinst.com/solutions/project-management/": "529cbb4e0a11df85fe88e5614f3a449fb483ad9fb1b2236537841e054d4e2d23"
   }
 }
