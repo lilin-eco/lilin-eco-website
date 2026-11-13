@@ -1,8 +1,9 @@
 import type { APIRoute } from 'astro';
 import { getPublishedNews } from '../lib/news';
+import { solutionDetails, solutionPath } from '../data/solution-details';
 export const GET: APIRoute = async ({ site }) => {
-  const pages = ['/', '/about/', '/solutions/', '/cases/', '/services/', '/news/', '/contact/']
-    .map(path => ({ path, lastmod: undefined as string | undefined }));
+  const pages = ['/', '/about/', '/solutions/', '/cases/', '/services/', '/news/', '/contact/', ...solutionDetails.map(item => solutionPath(item.slug))]
+    .map(path => ({ path, lastmod: solutionDetails.find(item => solutionPath(item.slug) === path)?.updatedDate }));
   const articles = (await getPublishedNews()).map(post => ({
     path: '/news/' + post.id + '/',
     lastmod: (post.data.updatedDate ?? post.data.pubDate).toISOString(),

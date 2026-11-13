@@ -65,6 +65,7 @@ export const businessAreas = [
 export const applicationDirections = [
   {
     title: '装饰工程项目管理系统',
+    href: '/solutions/project-management/',
     category: '工程管理',
     description: '面向项目组织、进度跟踪、预算材料与财务资料协同，梳理工程管理中的业务链路与信息关系。',
     focus: ['项目与进度', '预算与材料', '财务与资料'],
@@ -72,6 +73,7 @@ export const applicationDirections = [
   },
   {
     title: '装饰设计图纸资料管理系统',
+    href: '/solutions/drawing-management/',
     category: '图纸资料',
     description: '面向图纸与资料的分类、修订、审核、发放和归档，关注版本关系与跨环节的信息衔接。',
     focus: ['图纸与目录', '修订与审核', '发放与归档'],

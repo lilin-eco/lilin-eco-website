@@ -34,6 +34,11 @@ test('manifest rejects foreign sites, credentials, noncanonical paths, bad hashe
   assert.throws(() => validateManifest(manifest, 'b'.repeat(40)));
 });
 
+test('new pages are submitted before changed known URLs when daily quota is limited', () => {
+  const pending = changedPages(manifest, { schemaVersion: 1, pages: { [SITE + '/']: hashB } });
+  assert.deepEqual(pending.map(page => page.url), [SITE + '/news/item/', SITE + '/']);
+});
+
 test('build manifest is idempotent and includes only sitemap pages, with no redirect or noindex entries', async () => {
   const dir = await mkdtemp(path.join(tmpdir(), 'lilin-search-'));
   try {

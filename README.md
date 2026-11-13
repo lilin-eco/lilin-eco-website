@@ -29,6 +29,8 @@ npm run preview
 src/pages/index.astro        官网首页
 src/pages/about.astro        公司介绍
 src/pages/solutions.astro    五个业务领域
+src/pages/solutions/[slug].astro  工程数字化方案详情
+src/data/solution-details.ts      方案内容、常见问题及真实更新日期
 src/pages/cases.astro        项目与实践（数字化应用方向）
 src/pages/services.astro     服务方式
 src/pages/business.astro     原业务地址，跳转至业务领域
@@ -134,7 +136,7 @@ npm run build
 npm run check:seo
 ```
 
-检查覆盖唯一标题与摘要、规范链接、JSON-LD、分享图文件、面包屑、文章元数据、404、草稿隔离、站点地图及内部链接。站点地图目前包含 8 个实际可收录页面，不放草稿、旧跳转页或 404。百度已完成所有权验证并手动提交这 8 个网址；百度当前 sitemap 配额为 0，保留 robots.txt 中的 sitemap 入口。Google、Bing 尚未配置完成。不自动生成重复的营销文章。
+检查覆盖唯一标题与摘要、规范链接、JSON-LD、分享图文件、面包屑、文章元数据、404、草稿隔离、站点地图及内部链接。站点地图目前包含 10 个实际可收录页面，不放草稿、旧跳转页或 404。新增装饰工程项目管理、设计图纸资料管理两个独立方案页，由业务领域和项目与实践链接进入，提供业务场景、方案重点、沟通准备与可展开的常见问题；详情页有可见面包屑、Service 结构化数据和相关方向链接。内容介绍软件开发与方案设计需求，不宣称已交付产品、客户或资质。详情页 `updatedDate` 只在实际修改内容时更新，用于 sitemap 与页面结构化数据，不能随每次构建刷新日期。百度已完成所有权验证并手动提交原有 8 个网址；百度当前 sitemap 配额为 0，保留 robots.txt 中的 sitemap 入口。Google、Bing 尚未配置完成。不自动生成重复的营销文章。
 
 ## 百度自动提交
 
@@ -142,7 +144,7 @@ npm run check:seo
 
 `main` 推送后，ESA 原生构建发布继续照常运行，同时 GitHub Actions 工作流 `Baidu push after ESA deployment` 开始等待。构建结束时，`scripts/build-search-manifest.mjs` 根据 sitemap 生成 `dist/search-manifest.json`，记录 Git 提交版本与页面内容 SHA-256，并为可收录 HTML 写入不影响视觉的校验 meta。工作流必须确认正式域名上的版本与本次提交一致、所有页面的校验标记一致，才会调用百度；构建失败、旧缓存、跳转和 HTTP 错误都不会触发提交。生产版本 15 分钟左右仍未可访问时，等待步骤报错，排查后手动重跑。
 
-只比较线上已发布页面，提交相对上次百度成功接收记录新增或变化的网址。草稿、404、旧跳转页和未进入 sitemap 的页面不会提交。删除的页面从记录中移除，不向百度提交删除请求。首次记录以已手动提交的 8 个页面为基线，位于 `.github/baidu-initial-state.json`；不要修改基线来清除历史记录。
+只比较线上已发布页面，提交相对上次百度成功接收记录新增或变化的网址；配额有限时优先新增页面，再更新已知页面，避免新增内容被排在最后。草稿、404、旧跳转页和未进入 sitemap 的页面不会提交。删除的页面从记录中移除，不向百度提交删除请求。首次记录以已手动提交的 8 个页面为基线，位于 `.github/baidu-initial-state.json`；不要修改基线来清除历史记录。
 
 凭据只放在仓库 Settings → Secrets and variables → Actions 的加密 Secret **`BAIDU_PUSH_TOKEN`** 中，由最后的提交步骤读取；不放源代码、GitHub Variables、构建环境或日志。密钥另存于已授权的私密钉钉「官网运维」知识库。工作流不需要阿里云 AccessKey，不重新启用 GitHub Pages。`output/` 已忽略，禁止提交凭据临时文件。
 

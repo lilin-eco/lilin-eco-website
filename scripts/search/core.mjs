@@ -55,7 +55,9 @@ export function changedPages(manifest, state) {
   if (state?.schemaVersion !== 1 || !state.pages || typeof state.pages !== 'object' || Array.isArray(state.pages)) {
     throw new Error('Invalid Baidu checkpoint; refusing to reset submission history');
   }
-  return manifest.pages.filter(page => state.pages[page.url] !== page.hash);
+  // Give undiscovered URLs first use of a small daily quota, before refreshing known pages.
+  return manifest.pages.filter(page => state.pages[page.url] !== page.hash)
+    .sort((a, b) => Number(Object.hasOwn(state.pages, a.url)) - Number(Object.hasOwn(state.pages, b.url)));
 }
 
 export const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));

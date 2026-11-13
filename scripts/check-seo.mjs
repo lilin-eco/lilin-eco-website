@@ -61,6 +61,15 @@ for (const file of files) {
     const article = graph.find(node => node['@type'] === 'Article');
     assert.ok(article?.datePublished && article.author && article.publisher, `${label}: incomplete article`);
   }
+  if (expectedPath.startsWith('/solutions/') && expectedPath !== '/solutions/') {
+    const service = graph.find(node => node['@type'] === 'Service');
+    assert.equal(service?.url, canonical, `${label}: solution needs a matching Service entity`);
+    assert.equal(service?.provider?.['@id'], site + '/#organization');
+    const crumbs = graph.find(node => node['@type'] === 'BreadcrumbList');
+    assert.deepEqual(crumbs.itemListElement.map(item => item.item), [site + '/', site + '/solutions/', canonical]);
+    assert.ok(html.includes('aria-label="面包屑"'), `${label}: visible breadcrumb missing`);
+    assert.ok(html.includes('<details') && html.includes('/contact/'), `${label}: missing practical questions/contact path`);
+  }
   indexed.set(canonical, file);
   for (const match of html.matchAll(/<a\b[^>]*href="([^"]+)"/g)) {
     const href = match[1].replaceAll('&amp;', '&');

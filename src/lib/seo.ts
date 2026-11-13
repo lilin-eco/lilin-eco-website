@@ -1,6 +1,10 @@
 import { company } from '../data/company';
+import { solutionDetails, solutionPath } from '../data/solution-details';
 
 export const sitePages: Record<string, { title: string; description: string; label: string; type: string }> = {
+  ...Object.fromEntries(solutionDetails.map(solution => [solutionPath(solution.slug), {
+    title: solution.title, description: solution.description, label: solution.name, type: 'WebPage',
+  }])),
   '/': {
     title: '礼林生态官网｜达州礼林生态科技有限责任公司',
     description: '达州礼林生态科技有限责任公司官方网站。立足四川达州，业务涵盖软件开发与信息服务、工程与空间服务、生态与绿色技术、设备物资配套及运营生活服务。了解公司、业务领域与联系方式。',
@@ -48,7 +52,9 @@ export function createStructuredData(options: {
   const websiteId = home + '#website';
   const pageId = canonical.href + '#webpage';
   const metadata = sitePages[canonical.pathname];
+  const solution = solutionDetails.find(item => solutionPath(item.slug) === canonical.pathname);
   const crumbs = [{ name: '首页', item: home }];
+  if (solution) crumbs.push({ name: '业务领域', item: new URL('/solutions/', site).href });
   if (article) crumbs.push({ name: '新闻动态', item: new URL('/news/', site).href });
   if (canonical.pathname !== '/') crumbs.push({ name: metadata?.label ?? article?.title ?? title, item: canonical.href });
   const graph: Record<string, unknown>[] = [
@@ -67,6 +73,7 @@ export function createStructuredData(options: {
       url: canonical.href, name: title, description, inLanguage: 'zh-CN',
       isPartOf: { '@id': websiteId }, about: { '@id': organizationId },
       primaryImageOfPage: { '@type': 'ImageObject', url: image, width: 1200, height: 630 },
+      ...(solution ? { dateModified: solution.updatedDate } : {}),
       ...(canonical.pathname !== '/' ? { breadcrumb: { '@id': canonical.href + '#breadcrumb' } } : {}),
     },
   ];
@@ -80,6 +87,11 @@ export function createStructuredData(options: {
     datePublished: article.publishedTime, articleSection: article.category, inLanguage: 'zh-CN',
     ...(article.modifiedTime ? { dateModified: article.modifiedTime } : {}),
     author: { '@id': organizationId }, publisher: { '@id': organizationId }, image: [image],
+  });
+  if (solution) graph.push({
+    '@type': 'Service', '@id': canonical.href + '#service', name: solution.name + '软件方案',
+    serviceType: '软件开发与信息技术咨询', url: canonical.href, description: solution.summary,
+    provider: { '@id': organizationId }, mainEntityOfPage: { '@id': pageId },
   });
   return { '@context': 'https://schema.org', '@graph': graph };
 }
