@@ -62,6 +62,7 @@ export function createStructuredData(options: {
       '@type': 'Organization', '@id': organizationId,
       name: company.name, legalName: company.fullName, url: home,
       description: company.description,
+      logo: { '@type': 'ImageObject', url: new URL('/brand/logo-green-512.png', site).href, width: 512, height: 512 },
       telephone: company.phone, email: company.email,
     },
     {
